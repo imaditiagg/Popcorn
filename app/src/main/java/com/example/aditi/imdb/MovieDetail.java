@@ -10,6 +10,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -38,6 +39,8 @@ public class MovieDetail extends AppCompatActivity {
     Movie movie;
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +48,7 @@ public class MovieDetail extends AppCompatActivity {
         toolbar = findViewById(R.id.details_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
 
         collapsingToolbarLayout = findViewById(R.id.collapsing);
         appBarLayout=findViewById(R.id.activity_movie_detail_app_bar_layout);
@@ -63,9 +67,11 @@ public class MovieDetail extends AppCompatActivity {
         MovieDatabase database = Room.databaseBuilder(this.getApplicationContext(),MovieDatabase.class,"movies_db").allowMainThreadQueries().build();
         movieDao= database.getMovieDao();
 
+
         intent=getIntent();
         movieId=intent.getIntExtra(Constants.ID,0);
         fetchDetails();
+
 
 
     }
@@ -119,5 +125,6 @@ public class MovieDetail extends AppCompatActivity {
         });
 
     }
+
 
 }

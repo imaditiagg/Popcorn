@@ -30,4 +30,10 @@ public interface MovieService {
 
     @GET("https://api.themoviedb.org/3/person/{id}/tv_credits")
     Call<TVCastOfPerson> getTVCastOfPerson(@Path("id") long id,@Query("api_key") String api_key);
+
+    @GET("{id}/videos")
+    Call<FetchedVideo> getVideos(@Path("id") int id,@Query("api_key") String api_key);
+
+
+
 }
