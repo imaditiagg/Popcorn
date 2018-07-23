@@ -1,0 +1,34 @@
+package com.example.aditi.imdb;
+
+import android.content.Context;
+import android.content.Intent;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+public class MovieViewHolder2 extends RecyclerView.ViewHolder{
+
+    ImageView imageView;
+    TextView titleView,ratingsView;
+    View itemView;
+    final Context context;
+    CardView cardView;
+
+    public MovieViewHolder2(View itemView, Context context) {
+        super(itemView);
+        this.itemView=itemView;
+        this.context=context;
+        imageView=itemView.findViewById(R.id.imageView2);
+        titleView=itemView.findViewById(R.id.titleView2);
+        cardView=itemView.findViewById(R.id.card_view_show_card);
+
+        imageView.getLayoutParams().width = (int) (context.getResources().getDisplayMetrics().widthPixels * 0.31);
+        imageView.getLayoutParams().height = (int) ((context.getResources().getDisplayMetrics().widthPixels * 0.31) / 0.66);
+
+
+
+
+    }
+}

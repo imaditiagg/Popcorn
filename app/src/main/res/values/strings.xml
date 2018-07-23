@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">IMDB</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_movie_detail">MovieDetail</string>
+    <string name="title_activity_basic_new">BasicNew</string>
+    <string name="title_activity_cast_detail">CastDetail</string>
+    <string name="title_activity_cast_details">CastDetails</string>
+    <string name="biography">Biography</string>
+</resources>

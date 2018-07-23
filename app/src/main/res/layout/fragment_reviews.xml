@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:background="@color/grey"
+        android:layout_height="wrap_content">
+
+    <ProgressBar
+        android:layout_gravity="center"
+        android:id="@+id/reviewsProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <ListView
+        android:id="@+id/reviewsList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    </FrameLayout>
+
+
+
+
