@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -37,18 +38,45 @@ public class MovieAdapter2 extends RecyclerView.Adapter<MovieViewHolder2> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MovieViewHolder2 holder, int i) {
+    public void onBindViewHolder(@NonNull final MovieViewHolder2 holder, int i) {
         //Set data
         final Movie movie = movies.get(i);
         holder.titleView.setText(movie.title);
         Picasso.get().load(Constants.imageURL2+movie.posterPath).into(holder.imageView);
         holder.cardView.setCardBackgroundColor(context.getResources().getColor(R.color.black));
+        if (Favorite.isMovieFav(context, movie.getId())) {
+            holder.favButton.setBackground(context.getResources().getDrawable(R.drawable.ic_favorite_red_600_24dp));
+            holder.favButton.setEnabled(true);
+        } else {
+            holder.favButton.setBackground(context.getResources().getDrawable(R.drawable.ic_favorite_border_white_24dp));
+            holder.favButton.setEnabled(true);
+        }
+
+
+        //set onClickListener
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, MovieDetail.class);
                 intent.putExtra(Constants.ID, movie.id);
                 context.startActivity(intent);
+            }
+        });
+
+        holder.favButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!Favorite.isMovieFav(context,movie.getId())) {
+                    Favorite.addMovieToFav(context, movie);
+                    holder.favButton.setBackground(context.getResources().getDrawable(R.drawable.ic_favorite_red_600_24dp));
+                    Toast.makeText(context, "Movie added to Favorites", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Favorite.removeMovieFromFav(context,movie.id);
+                    holder.favButton.setBackground(context.getResources().getDrawable(R.drawable.ic_favorite_border_white_24dp));
+                    Toast.makeText(context, "Movie removed from Favorites", Toast.LENGTH_SHORT).show();
+
+                }
             }
         });
 

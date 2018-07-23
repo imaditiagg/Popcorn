@@ -20,9 +20,11 @@ public class Movie {
     @SerializedName("poster_path")
     String posterPath;
 
-    @SerializedName("backdrop_path") @Ignore
+    @SerializedName("backdrop_path")
+    @Ignore
     String backdropPath;
-    @SerializedName("vote_average") @Ignore
+    @SerializedName("vote_average")
+    @Ignore
     float rating;
     @SerializedName("release_date")
     @Ignore
@@ -37,9 +39,13 @@ public class Movie {
     @Ignore
     public ArrayList<Genres> genres =new ArrayList<>();
 
-    public int getMovieId() {
-        return id;
+    public Movie(int id,String title,String posterPath){
+        this.id=id;
+        this.title=title;
+        this.posterPath=posterPath;
     }
+
+
 
     public String getReleaseDate() {
         return releaseDate;
@@ -101,9 +107,6 @@ public class Movie {
         this.rating = rating;
     }
 
-    public void setMovieId(int movieId) {
-        this.id = movieId;
-    }
 
     public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;

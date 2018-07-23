@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,6 +15,7 @@ public class MovieViewHolder2 extends RecyclerView.ViewHolder{
     TextView titleView,ratingsView;
     View itemView;
     final Context context;
+    Button favButton;
     CardView cardView;
 
     public MovieViewHolder2(View itemView, Context context) {
@@ -23,6 +25,7 @@ public class MovieViewHolder2 extends RecyclerView.ViewHolder{
         imageView=itemView.findViewById(R.id.imageView2);
         titleView=itemView.findViewById(R.id.titleView2);
         cardView=itemView.findViewById(R.id.card_view_show_card);
+        favButton=itemView.findViewById(R.id.image_fav_button2);
 
         imageView.getLayoutParams().width = (int) (context.getResources().getDisplayMetrics().widthPixels * 0.31);
         imageView.getLayoutParams().height = (int) ((context.getResources().getDisplayMetrics().widthPixels * 0.31) / 0.66);

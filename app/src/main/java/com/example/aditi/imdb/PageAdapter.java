@@ -28,6 +28,8 @@ public class PageAdapter extends FragmentPagerAdapter {
             b.putInt(Constants.RUNTIME,movie.runtime);
             b.putString(Constants.TAGLINE,movie.tagline);
             b.putFloat(Constants.RATING,movie.rating);
+            b.putInt(Constants.ID,movie.id);
+            b.putString(Constants.TITLE,movie.title);
             fragment.setArguments(b);
             return fragment;
         }

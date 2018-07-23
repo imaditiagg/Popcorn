@@ -12,4 +12,5 @@ public class Constants {
     public static final String ID="Id";
     public static final String RATING="Rating";
     public static final String CAST_ID="CastID";
+    public static final String TITLE="Title";
 }

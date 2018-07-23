@@ -96,8 +96,7 @@ public class MoviesFragment extends android.support.v4.app.Fragment implements  
         upcomingView.addItemDecoration( new LayoutMarginDecoration(1,20));
         upcomingView.setAdapter(adapter2);
 
-       MovieDatabase database = Room.databaseBuilder(getContext().getApplicationContext(),MovieDatabase.class,"movies_db").allowMainThreadQueries().build();
-       movieDao= database.getMovieDao();
+
 
 
         fetchMovies("now_playing",nowShowingMovies,adapter1);
@@ -121,7 +120,6 @@ public class MoviesFragment extends android.support.v4.app.Fragment implements  
 
                 for(int i = 0;i<movie.size();i++){
                     movies.add(movie.get(i));
-                    movieDao.addMovie(movie.get(i)); //add movie to database
                 }
 
                 adapter.notifyDataSetChanged();
@@ -149,7 +147,6 @@ public class MoviesFragment extends android.support.v4.app.Fragment implements  
 
                 for(int i = 0;i<movie.size();i++){
                     movies.add(movie.get(i));
-                    movieDao.addMovie(movie.get(i)); //add movie to database
                 }
 
                 adapter.notifyDataSetChanged();
