@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".FavoritesFragment">
+
+    <android.support.design.widget.TabLayout
+        android:layout_width="match_parent"
+        android:id="@+id/favTabLayout"
+        app:tabTextColor="@color/white"
+        app:tabSelectedTextColor="@color/yellow"
+        android:background="@color/darkGrey"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.TabItem
+            android:text="@string/movies"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <android.support.design.widget.TabItem
+            android:text="@string/tvShows"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+
+    </android.support.design.widget.TabLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/favViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v4.view.ViewPager>
+</LinearLayout>
+

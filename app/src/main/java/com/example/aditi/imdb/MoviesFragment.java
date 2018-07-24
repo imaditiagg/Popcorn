@@ -35,13 +35,22 @@ public class MoviesFragment extends android.support.v4.app.Fragment implements  
     MovieAdapter2 adapter3,adapter4;
     TextView tv1,tv2,tv3,tv4;
     ArrayList<Movie> nowShowingMovies,topRatedMovies,popularMovies,upcomingMovies;
-    MovieDao movieDao;
+
 
 
     public MoviesFragment() {
         // Required empty public constructor
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        fetchMovies("now_playing",nowShowingMovies,adapter1);
+        fetchMovies("upcoming",upcomingMovies,adapter2);
+        fetchMovies2("top_rated",topRatedMovies,adapter4);
+        fetchMovies2("popular",popularMovies,adapter3);
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

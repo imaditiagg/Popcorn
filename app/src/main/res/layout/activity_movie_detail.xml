@@ -78,7 +78,9 @@
             android:layout_height="wrap_content"
             app:layout_collapseMode="pin"
             android:background="@color/black"
-            app:tabIndicatorColor="@android:color/white">
+            app:tabSelectedTextColor="@color/yellow"
+            app:tabTextColor="@color/white"
+            app:tabIndicatorColor="@color/yellow">
 
         <android.support.design.widget.TabItem
             android:id="@+id/detailsTab"

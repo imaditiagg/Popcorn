@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    >
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -20,13 +20,13 @@
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
+    <!--frame layout for fragments-->
 
-    <fragment
-        android:id="@+id/moviesFragment"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:name="com.example.aditi.imdb.MoviesFragment"
+    <FrameLayout
+        android:id="@+id/main_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_height="match_parent"/>
 
 
 </android.support.design.widget.CoordinatorLayout>
