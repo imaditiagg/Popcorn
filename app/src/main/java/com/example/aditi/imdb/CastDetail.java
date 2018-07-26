@@ -31,7 +31,7 @@ public class CastDetail extends Activity {
     Intent intent;
     android.support.v7.widget.Toolbar toolbar;
     long castId;
-    TextView nameView,ageView,placeView,readMoreView,bioView,header;
+    TextView nameView,ageView,placeView,readMoreView,bioView,header,ageHeader,birthPlaceHeader,movieCastHeader,tvCastHeader;
     ImageView imageView;
     Person person;
     AppBarLayout appBarLayout;
@@ -49,9 +49,9 @@ public class CastDetail extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cast_detail);
         toolbar=findViewById(R.id.person_details_toolbar);
-       // setSupportActionBar(toolbar);
+       // setSupportActionBar(toolbar2);
        // getSupportActionBar().setDisplayShowTitleEnabled(false);
-        toolbar.setNavigationIcon(R.drawable.ic_chevron_left_white_24dp);
+
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                                                  @Override
                                                  public void onClick(View view) {
@@ -60,11 +60,14 @@ public class CastDetail extends Activity {
                                              }
 
         );
+        toolbar.setNavigationIcon(R.drawable.ic_chevron_left_white_24dp);
+
 
         movies=new ArrayList<>();
         tvShows=new ArrayList<>();
         intent=getIntent();
         castId=intent.getLongExtra(Constants.CAST_ID,0);
+
         nameView=findViewById(R.id.personName);
         ageView=findViewById(R.id.personAge);
         placeView=findViewById(R.id.personBirthPlace);
@@ -76,6 +79,10 @@ public class CastDetail extends Activity {
         collapsingToolbarLayout=findViewById(R.id.cast_collapsing_toolbar);
         movieCastRecyclerView=findViewById(R.id.movieCastView);
         tvCastRecyclerView=findViewById(R.id.tvCastView);
+        ageHeader=findViewById(R.id.ageHeader);
+        birthPlaceHeader=findViewById(R.id.birthplaceHeader);
+        tvCastHeader=findViewById(R.id.tvCastHeader);
+        movieCastHeader=findViewById(R.id.movieCastHeader);
 
         adapter=new MovieCastOfPersonAdapter(this,movies);
         adapter2=new TVCastOfPersonAdapter(this,tvShows);
@@ -107,8 +114,9 @@ public class CastDetail extends Activity {
                     @Override
                     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                         if (appBarLayout.getTotalScrollRange() + verticalOffset == 0) {
-                            if (person.getName() != null)
+                            if (person.getName() != null){
                                 collapsingToolbarLayout.setTitle(person.getName());
+                        }
                             else
                                 collapsingToolbarLayout.setTitle("");
                             toolbar.setVisibility(View.VISIBLE);
@@ -128,6 +136,7 @@ public class CastDetail extends Activity {
                     placeView.setText(person.getPlaceOfBirth());
                 }
                 else {
+                    birthPlaceHeader.setVisibility(View.GONE);
                     placeView.setText("");
                 }
                 if (person.getBirthday() != null && !person.getBirthday().trim().isEmpty()) {
@@ -139,6 +148,10 @@ public class CastDetail extends Activity {
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
+                }
+                else{
+                    ageView.setText("");
+                    ageHeader.setVisibility(View.GONE);
                 }
                 if (person.getBiography() != null && !person.getBiography().trim().isEmpty()) {
                     header.setVisibility(View.VISIBLE);
@@ -181,9 +194,13 @@ public class CastDetail extends Activity {
                     movies.add(movie.get(i));
 
                 }
-
-                adapter.notifyDataSetChanged();
-                movieCastRecyclerView.setVisibility(View.VISIBLE);
+                if(!movies.isEmpty()) {
+                    adapter.notifyDataSetChanged();
+                    movieCastRecyclerView.setVisibility(View.VISIBLE);
+                }
+                else{
+                    movieCastHeader.setVisibility(View.GONE);
+                }
             }
             @Override
             public void onFailure(Call<MovieCastOfPerson> call, Throwable t) {
@@ -208,9 +225,13 @@ public class CastDetail extends Activity {
                     tvShows.add(tv.get(i));
 
                 }
-
-                adapter2.notifyDataSetChanged();
-                tvCastRecyclerView.setVisibility(View.VISIBLE);
+                if(!tvShows.isEmpty()) {
+                    adapter2.notifyDataSetChanged();
+                    tvCastRecyclerView.setVisibility(View.VISIBLE);
+                }
+                else{
+                    tvCastHeader.setVisibility(View.GONE);
+                }
             }
             @Override
             public void onFailure(Call<TVCastOfPerson> call, Throwable t) {

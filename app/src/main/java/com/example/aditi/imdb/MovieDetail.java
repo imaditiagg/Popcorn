@@ -14,9 +14,12 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -37,7 +40,7 @@ public class MovieDetail extends AppCompatActivity {
     TabLayout tabLayout;
     ViewPager viewPager;
     Movie movie;
-
+    FrameLayout frameLayout;
 
 
 
@@ -48,6 +51,16 @@ public class MovieDetail extends AppCompatActivity {
         toolbar = findViewById(R.id.details_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+      /*  toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                                                 @Override
+                                                 public void onClick(View view) {
+                                                     finish();
+                                                 }
+                                             }
+
+        );
+        toolbar.setNavigationIcon(R.drawable.ic_chevron_left_white_24dp);*/
 
 
         collapsingToolbarLayout = findViewById(R.id.collapsing);
@@ -61,6 +74,7 @@ public class MovieDetail extends AppCompatActivity {
 
         title=findViewById(R.id.movieTitle);
         backdrop=findViewById(R.id.backdrop_image);
+        frameLayout=findViewById(R.id.activity_movie_detail_frameLayout);
 
 
         genres=findViewById(R.id.movieGenres);
@@ -77,6 +91,13 @@ public class MovieDetail extends AppCompatActivity {
     }
 
     public void fetchDetails(){
+
+        backdrop.setVisibility(View.GONE);
+        final LottieAnimationView animationView=new LottieAnimationView(this);
+        animationView.setAnimation(R.raw.loading_animation);
+        animationView.playAnimation();
+        animationView.setVisibility(View.VISIBLE);
+        frameLayout.addView(animationView);
 
         Call<Movie> call = ApiClient.getMoviesService().getDetails(movieId,Constants.apiKey);
         call.enqueue(new Callback<Movie>() {
@@ -115,6 +136,9 @@ public class MovieDetail extends AppCompatActivity {
                     }
                 }
                 genres.setText(genre);
+                animationView.setVisibility(View.GONE);
+               // frameLayout.removeView(animationView);
+                backdrop.setVisibility(View.VISIBLE);
                 Picasso.get().load(Constants.imageURL+movie.backdropPath).into(backdrop);
 
             }

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/darkGrey"
     tools:context=".CastDetail">
 
     <android.support.design.widget.AppBarLayout
@@ -59,6 +60,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/ageHeader"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -75,6 +77,7 @@
                     android:textSize="15dp" />
 
                 <TextView
+                    android:id="@+id/birthplaceHeader"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"

@@ -9,7 +9,7 @@
     android:elevation="100dp"
     android:focusable="true"
     android:foreground="?android:attr/selectableItemBackground"
-    app:cardCornerRadius="4dp">
+    app:cardCornerRadius="6dp">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -46,8 +46,6 @@
                     android:id="@+id/titleView"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentLeft="true"
                     android:layout_margin="8dp"
                     android:layout_weight="1"
                     android:ellipsize="end"
@@ -59,8 +57,7 @@
                     android:id="@+id/ratingsView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true"
+
                     android:layout_margin="8dp"
                     android:textColor="@android:color/white" />
 

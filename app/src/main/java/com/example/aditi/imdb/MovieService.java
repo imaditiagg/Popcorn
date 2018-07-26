@@ -34,6 +34,9 @@ public interface MovieService {
     @GET("{id}/videos")
     Call<FetchedVideo> getVideos(@Path("id") int id,@Query("api_key") String api_key);
 
+    @GET("https://api.themoviedb.org/3/search/multi")
+    Call<SearchResponse> search(@Query("api_key") String key, @Query("query") String query);
+
 
 
 }

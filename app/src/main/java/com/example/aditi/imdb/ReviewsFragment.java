@@ -12,11 +12,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.airbnb.lottie.LottieAnimationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +40,8 @@ public class ReviewsFragment extends android.support.v4.app.Fragment {
     private static final int PAGE_START = 1;
     private int currentPage;
     TextView tv;
+    FrameLayout frameLayout;
+
 
     public ReviewsFragment() {
         // Required empty public constructor
@@ -53,6 +58,7 @@ public class ReviewsFragment extends android.support.v4.app.Fragment {
 
         progressBar=view.findViewById(R.id.reviewsProgressBar);
         reviewsView=view.findViewById(R.id.reviewsList);
+        frameLayout=view.findViewById(R.id.reviews_root_layout);
 
         Bundle bundle=getArguments();
         movieId= bundle.getInt(Constants.ID);
@@ -128,9 +134,26 @@ public class ReviewsFragment extends android.support.v4.app.Fragment {
                     if(currentPage==1){
 
                         progressBar.setVisibility(View.GONE);
-                        reviewsView.setVisibility(View.VISIBLE);
-                        Toast.makeText(getContext(),"No Reviews",Toast.LENGTH_SHORT).show();
+                        reviewsView.setVisibility(View.GONE);
                         tv.setVisibility(View.GONE);
+
+                        LottieAnimationView animationView=new LottieAnimationView(getContext());
+                        animationView.setAnimation(R.raw.empty_list);
+                        frameLayout.addView(animationView);
+                        animationView.playAnimation();
+
+                        TextView tv= new TextView(getContext());
+                        tv.setText("No Reviews");
+                        tv.setTextColor(getResources().getColor(R.color.white));
+                        tv.setTextSize(25);
+                       // tv.setGravity(Gravity.CENTER_HORIZONTAL);
+                       LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                       params.setMargins(350,400,0,0);
+                       tv.setLayoutParams(params);
+
+                        frameLayout.addView(tv);
+
+
                     }
                     else {
                         Toast.makeText(getContext(), "No more reviews", Toast.LENGTH_SHORT).show();

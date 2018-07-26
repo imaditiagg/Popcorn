@@ -11,11 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -52,7 +54,7 @@ public class DetailsFragment extends android.support.v4.app.Fragment {
         TextView releaseDateView = view.findViewById(R.id.releaseDate);
         TextView runtimeView=view.findViewById(R.id.runtime);
         final ImageView posterView= view.findViewById(R.id.moviePoster);
-        final LinearLayout layout =view.findViewById(R.id.bglayout);
+
         TextView taglineView = view.findViewById(R.id.tagline);
         TextView descView=view.findViewById(R.id.overView);
         TextView ratingView = view.findViewById(R.id.rating);
@@ -81,21 +83,9 @@ public class DetailsFragment extends android.support.v4.app.Fragment {
         taglineView.setText(tagline);
         descView.setText(description);
         ratingView.setText(String.valueOf(rating) +"/10" );
-        Picasso.get().load(Constants.imageURL+poster).into(posterView,new Callback() {
-            @Override
-            public void onSuccess() {
 
-             //   layout.setBackground(posterView.getDrawable());
+        Picasso.get().load(Constants.imageURL+poster).into(posterView);
 
-            }
-
-            @Override
-            public void onError(Exception e) {
-
-            }
-
-
-        });
 
         fetchTrailer(id);
 

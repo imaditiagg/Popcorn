@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".SearchActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:theme="@style/AppTheme.PopupOverlay"
+        android:layout_height="wrap_content">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/search_activity_toolbar"
+        android:layout_width="match_parent"
+        android:background="@color/grey"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        android:layout_height="?android:attr/actionBarSize">
+
+    </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+    <!--content-->
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:id="@+id/activity_search_framelayout"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_height="match_parent">
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/search_item_recycler_view"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_marginTop="5dp"
+        android:layout_height="wrap_content">
+
+    </android.support.v7.widget.RecyclerView>
+
+        <TextView
+            android:id="@+id/search_item_not_found_view"
+            android:layout_width="match_parent"
+            android:text="No results found"
+            android:visibility="gone"
+            android:textSize="20dp"
+            android:layout_marginTop="200dp"
+            android:layout_marginLeft="100dp"
+            android:textColor="@color/darkGrey"
+            android:layout_height="wrap_content" />
+
+    </FrameLayout>
+
+</android.support.design.widget.CoordinatorLayout>
