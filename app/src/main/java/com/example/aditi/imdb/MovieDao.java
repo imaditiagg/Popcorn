@@ -10,6 +10,7 @@ import java.util.List;
 @Dao
 public interface MovieDao {
 
+    //movies
     @Insert
     void addMovie(Movie movie);
 
@@ -21,4 +22,20 @@ public interface MovieDao {
 
     @Query("select * from favmoviestable")
     List<Movie> loadMovies();
+
+
+    //tv shows
+    @Insert
+    void addShow(TV tvShow);
+
+    @Query("select * from favtvshowstable where id = :id")
+    TV searchShow(int id);
+
+    @Query("DELETE FROM favtvshowstable WHERE id = :id")
+    void deleteShow(int id);
+
+    @Query("select * from favtvshowstable")
+    List<TV> loadShows();
+
+
 }

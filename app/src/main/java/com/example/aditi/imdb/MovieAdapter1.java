@@ -68,13 +68,14 @@ public class MovieAdapter1 extends RecyclerView.Adapter<MovieViewHolder1> {
                     //add to db
                     Favorite.addMovieToFav(context, movie);
                     holder.favButton.setBackground(context.getResources().getDrawable(R.drawable.ic_favorite_red_600_24dp));
-                    Toast.makeText(context, "Movie added to Favorites", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Added to Favorites", Toast.LENGTH_SHORT).show();
+                    holder.favButton.setEnabled(false);
                 }
                 else{
                     // means already added to db just change the background
                     holder.favButton.setBackground(context.getResources().getDrawable(R.drawable.ic_favorite_red_600_24dp));
-                    Toast.makeText(context, "This Movie has been already added to Favorites", Toast.LENGTH_SHORT).show();
-
+                    Toast.makeText(context, "Added to Favorites", Toast.LENGTH_SHORT).show();
+                    holder.favButton.setEnabled(false);
                 }
             }
         });

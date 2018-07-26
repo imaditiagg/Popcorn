@@ -49,4 +49,44 @@ public class Favorite {
         return movies2;
 
     }
+
+    public static void addShow(Context context,TV show) {
+        MovieDatabase  database = Room.databaseBuilder(context, MovieDatabase.class, "movies_db").allowMainThreadQueries().build();
+        MovieDao  movieDao = database.getMovieDao();
+        movieDao.addShow(show);
+
+    }
+
+    public static boolean isShowFav(Context context,int id){
+
+        MovieDatabase  database = Room.databaseBuilder(context, MovieDatabase.class, "movies_db").allowMainThreadQueries().build();
+        MovieDao  movieDao = database.getMovieDao();
+        TV tvShow = movieDao.searchShow(id);
+        if(tvShow==null){
+            return false;
+        }
+
+        else {
+            return true;
+        }
+    }
+
+    public static void removeShowFromFav(Context context,int id){
+        MovieDatabase  database = Room.databaseBuilder(context, MovieDatabase.class, "movies_db").allowMainThreadQueries().build();
+        MovieDao  movieDao = database.getMovieDao();
+        Log.i("Remove show","fn called");
+        movieDao.deleteShow(id);
+    }
+
+    public static ArrayList<TV> loadFavShows(Context context){
+
+        MovieDatabase  database = Room.databaseBuilder(context, MovieDatabase.class, "movies_db").allowMainThreadQueries().build();
+        MovieDao  movieDao = database.getMovieDao();
+        List<TV> shows1= movieDao.loadShows();
+        ArrayList<TV> shows2= new ArrayList<>();
+        shows2.addAll(shows1);
+
+        return shows2;
+
+    }
 }

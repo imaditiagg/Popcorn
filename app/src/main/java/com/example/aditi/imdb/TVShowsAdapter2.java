@@ -1,50 +1,45 @@
 package com.example.aditi.imdb;
 
-
-
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class MovieAdapter2 extends RecyclerView.Adapter<MovieViewHolder2> {
+public class TVShowsAdapter2 extends RecyclerView.Adapter<TVShowsViewHolder2 >{
 
-    ArrayList<Movie> movies;
     Context context;
-
-    MovieAdapter2(Context context,ArrayList<Movie> movies){
+    ArrayList<TV> shows;
+    TVShowsAdapter2(Context context,ArrayList<TV> shows){
         this.context=context;
-        this.movies=movies;
-
+        this.shows=shows;
     }
 
     @NonNull
     @Override
-    public MovieViewHolder2 onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public TVShowsViewHolder2 onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowLayout = inflater.inflate(R.layout.movie_row_layout2,null,false);
         //inflate layout and return it to viewHolder
-        return new MovieViewHolder2(rowLayout,context);
+        return new TVShowsViewHolder2(rowLayout,context);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final MovieViewHolder2 holder, int i) {
+    public void onBindViewHolder(@NonNull final TVShowsViewHolder2 holder, int i) {
         //Set data
-        final Movie movie = movies.get(i);
-        holder.titleView.setText(movie.title);
-        Picasso.get().load(Constants.imageURL2+movie.posterPath).into(holder.imageView);
+        final TV show = shows.get(i);
+        holder.titleView.setText(show.name);
+
+        Picasso.get().load(Constants.imageURL2+show.poster_path).into(holder.imageView);
         holder.cardView.setCardBackgroundColor(context.getResources().getColor(R.color.black));
-        if (Favorite.isMovieFav(context, movie.getId())) {
+        if (Favorite.isShowFav(context, show.id)) {
             holder.favButton.setBackground(context.getResources().getDrawable(R.drawable.ic_favorite_red_600_24dp));
             holder.favButton.setEnabled(false);
         } else {
@@ -57,8 +52,8 @@ public class MovieAdapter2 extends RecyclerView.Adapter<MovieViewHolder2> {
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, MovieDetail.class);
-                intent.putExtra(Constants.ID, movie.id);
+                Intent intent = new Intent(context, TVShowDetail.class);
+                intent.putExtra(Constants.ID, show.id);
                 context.startActivity(intent);
             }
         });
@@ -66,19 +61,18 @@ public class MovieAdapter2 extends RecyclerView.Adapter<MovieViewHolder2> {
         holder.favButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!Favorite.isMovieFav(context,movie.getId())) {
+                if(!Favorite.isShowFav(context,show.getId())) {
                     //add to db
-                    Favorite.addMovieToFav(context, movie);
+                    Favorite.addShow(context, show);
                     holder.favButton.setBackground(context.getResources().getDrawable(R.drawable.ic_favorite_red_600_24dp));
                     Toast.makeText(context, "Added to Favorites", Toast.LENGTH_SHORT).show();
                     holder.favButton.setEnabled(false);
                 }
                 else{
-                    //means already added to db just change the background
+                    // means already added to db just change the background
                     holder.favButton.setBackground(context.getResources().getDrawable(R.drawable.ic_favorite_red_600_24dp));
                     Toast.makeText(context, "Added to Favorites", Toast.LENGTH_SHORT).show();
                     holder.favButton.setEnabled(false);
-
                 }
             }
         });
@@ -88,6 +82,6 @@ public class MovieAdapter2 extends RecyclerView.Adapter<MovieViewHolder2> {
 
     @Override
     public int getItemCount() {
-        return movies.size();
+        return shows.size();
     }
 }

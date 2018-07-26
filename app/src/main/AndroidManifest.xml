@@ -31,8 +31,15 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".SearchActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:label="@string/title_activity_search"></activity>
+            android:label="@string/title_activity_search"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".TVShowDetail"
+            android:label="@string/title_activity_tvshow_detail" />
+        <activity android:name=".ViewAllShows"
+            android:theme="@style/AppTheme.NoActionBar" >
+
+        </activity>
     </application>
 
 </manifest>

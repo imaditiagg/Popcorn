@@ -1,14 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".TVShowsFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ProgressBar
+        android:id="@+id/fragment_tvshows_progressBar"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:visibility="gone"
+        android:layout_height="wrap_content" />
+
+
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:id="@+id/fragment_tvshows_scrollView"
+        android:visibility="gone"
+        android:background="@color/darkGrey"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="22dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Airing Today"/>
+                <TextView
+                    android:id="@+id/fragment_tvshows_viewNowShowing"
+                    android:text="View All"
+                    android:textSize="15dp"
+                    android:layout_marginTop="22dp"
+                    android:textColor="@color/yellow"
+                    android:layout_marginLeft="175dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/fragment_tvshows_nowShowingView"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            </android.support.v7.widget.RecyclerView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="22dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="30dp"
+                    android:text="Popular"/>
+                <TextView
+                    android:id="@+id/fragment_tvshows_viewPopular"
+                    android:text="View All"
+                    android:textSize="15dp"
+                    android:layout_marginTop="32dp"
+                    android:textColor="@color/yellow"
+                    android:layout_marginLeft="222dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/fragment_tvshows_popularView"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            </android.support.v7.widget.RecyclerView>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="22dp"
+                    android:textColor="@color/white"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="30dp"
+                    android:textStyle="bold"
+                    android:text="On The Air"/>
+                <TextView
+                    android:id="@+id/fragment_tvshows_viewOnTheAir"
+                    android:text="View All"
+                    android:textSize="15dp"
+                    android:layout_marginTop="32dp"
+                    android:textColor="@color/yellow"
+                    android:layout_marginLeft="195dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/fragment_tvshows_onTheAirView"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            </android.support.v7.widget.RecyclerView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="22dp"
+                    android:textColor="@color/white"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="30dp"
+                    android:textStyle="bold"
+                    android:text="Top Rated"/>
+                <TextView
+                    android:id="@+id/fragment_tvshows_viewTopRated"
+                    android:text="View All"
+                    android:textSize="15dp"
+                    android:layout_marginTop="32dp"
+                    android:textColor="@color/yellow"
+                    android:layout_marginLeft="200dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/fragment_tvshows_topRatedView"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 
 </FrameLayout>

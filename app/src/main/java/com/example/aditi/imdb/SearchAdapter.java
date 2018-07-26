@@ -116,6 +116,15 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
 
             }
             Picasso.get().load(Constants.imageURL+result.getPoster_path()).into(holder.imageView);
+            holder.cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent= new Intent(context,TVShowDetail.class);
+                    intent.putExtra(Constants.ID,result.getId());
+                    context.startActivity(intent);
+
+                }
+            });
         }
 
         else if(result.getMedia_type().equals("person")) {

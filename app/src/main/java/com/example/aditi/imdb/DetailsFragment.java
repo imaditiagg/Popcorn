@@ -84,7 +84,7 @@ public class DetailsFragment extends android.support.v4.app.Fragment {
         descView.setText(description);
         ratingView.setText(String.valueOf(rating) +"/10" );
 
-        Picasso.get().load(Constants.imageURL+poster).into(posterView);
+        Picasso.get().load(Constants.imageURL2+poster).into(posterView);
 
 
         fetchTrailer(id);
@@ -106,12 +106,12 @@ public class DetailsFragment extends android.support.v4.app.Fragment {
                 if(!Favorite.isMovieFav(getContext(),movie.getId())) {
                     Favorite.addMovieToFav(getContext(), movie);
                     favButton.setBackground(getContext().getResources().getDrawable(R.drawable.ic_favorite_red_600_24dp));
-                    Toast.makeText(getContext(), "Movie added to Favorites", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Added to Favorites", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     Favorite.removeMovieFromFav(getContext(),movie.id);
                     favButton.setBackground(getContext().getResources().getDrawable(R.drawable.ic_favorite_border_white_24dp));
-                    Toast.makeText(getContext(), "Movie removed from Favorites", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Removed from Favorites", Toast.LENGTH_SHORT).show();
 
                 }
             }

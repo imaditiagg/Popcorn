@@ -69,9 +69,9 @@ public class TVCastOfPersonAdapter  extends RecyclerView.Adapter<TVCastOfPersonA
             movieCard.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                   /* Intent intent = new Intent(context, MovieDetail.class);
+                    Intent intent = new Intent(context, TVShowDetail.class);
                     intent.putExtra(Constants.ID, casts.get(getAdapterPosition()).getId());
-                    context.startActivity(intent);*/
+                    context.startActivity(intent);
                 }
             });
         }
