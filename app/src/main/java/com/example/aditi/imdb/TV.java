@@ -4,6 +4,8 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
+import java.util.List;
+
 @Entity(tableName = "FavTVShowsTable")
 public class TV {
     @PrimaryKey(autoGenerate = true)
@@ -21,6 +23,15 @@ public class TV {
     String backdrop_path;
     @Ignore
     float vote_average;
+
+    @Ignore
+    List<Genres> genres;
+
+    TV(int id,String name,String poster_path){
+        this.id=id;
+        this.name=name;
+        this.poster_path=poster_path;
+    }
 
     public void setUniqueId(int uniqueId) {
         this.uniqueId = uniqueId;

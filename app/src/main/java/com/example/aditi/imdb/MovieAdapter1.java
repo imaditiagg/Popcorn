@@ -35,7 +35,7 @@ public class MovieAdapter1 extends RecyclerView.Adapter<MovieViewHolder1> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final MovieViewHolder1 holder, int i) {
+    public void onBindViewHolder(@NonNull final MovieViewHolder1 holder, final int i) {
         //Set data
         final Movie movie = movies.get(i);
         holder.titleView.setText(movie.title);
@@ -57,6 +57,7 @@ public class MovieAdapter1 extends RecyclerView.Adapter<MovieViewHolder1> {
             public void onClick(View v) {
                 Intent intent = new Intent(context, MovieDetail.class);
                 intent.putExtra(Constants.ID, movie.id);
+                intent.putExtra(Constants.TYPE,Constants.MOVIETYPE);
                 context.startActivity(intent);
             }
         });

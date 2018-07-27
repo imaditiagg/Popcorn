@@ -165,6 +165,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             transaction.commit();
             return true;
 
+
+        }
+        else if(id==R.id.popularPeopleItem){
+            toolbar.setTitle(R.string.popular);
+
+            PopularPeopleFragment fragment=new PopularPeopleFragment();
+
+            FragmentManager fragmentManager =getSupportFragmentManager();
+            FragmentTransaction transaction=fragmentManager.beginTransaction();
+            transaction.replace(R.id.main_container,fragment);
+            transaction.commit();
+            return true;
         }
 
 

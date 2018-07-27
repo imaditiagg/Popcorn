@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -31,10 +32,10 @@ import retrofit2.Response;
 public class MovieDetail extends AppCompatActivity {
     Intent intent;
     int movieId;
-    ImageView backdrop,poster;
+    ImageView backdrop;
     TextView title,genres;
     Toolbar toolbar;
-    MovieDao movieDao;
+
     CollapsingToolbarLayout collapsingToolbarLayout;
     AppBarLayout appBarLayout;
     TabLayout tabLayout;
@@ -52,7 +53,7 @@ public class MovieDetail extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-      /*  toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                                                  @Override
                                                  public void onClick(View view) {
                                                      finish();
@@ -60,7 +61,9 @@ public class MovieDetail extends AppCompatActivity {
                                              }
 
         );
-        toolbar.setNavigationIcon(R.drawable.ic_chevron_left_white_24dp);*/
+        toolbar.setNavigationIcon(R.drawable.ic_chevron_left_white_24dp);
+
+
 
 
         collapsingToolbarLayout = findViewById(R.id.collapsing);
@@ -75,12 +78,7 @@ public class MovieDetail extends AppCompatActivity {
         title=findViewById(R.id.movieTitle);
         backdrop=findViewById(R.id.backdrop_image);
         frameLayout=findViewById(R.id.activity_movie_detail_frameLayout);
-
-
         genres=findViewById(R.id.movieGenres);
-        MovieDatabase database = Room.databaseBuilder(this.getApplicationContext(),MovieDatabase.class,"movies_db").allowMainThreadQueries().build();
-        movieDao= database.getMovieDao();
-
 
         intent=getIntent();
         movieId=intent.getIntExtra(Constants.ID,0);
@@ -98,6 +96,7 @@ public class MovieDetail extends AppCompatActivity {
         animationView.playAnimation();
         animationView.setVisibility(View.VISIBLE);
         frameLayout.addView(animationView);
+
 
         Call<Movie> call = ApiClient.getMoviesService().getDetails(movieId,Constants.apiKey);
         call.enqueue(new Callback<Movie>() {

@@ -41,6 +41,7 @@ public class ReviewsFragment extends android.support.v4.app.Fragment {
     private int currentPage;
     TextView tv;
     FrameLayout frameLayout;
+    String type;
 
 
     public ReviewsFragment() {
@@ -62,6 +63,7 @@ public class ReviewsFragment extends android.support.v4.app.Fragment {
 
         Bundle bundle=getArguments();
         movieId= bundle.getInt(Constants.ID);
+        type=bundle.getString(Constants.TYPE);
 
         reviews=new ArrayList<>();
         adapter=new ReviewsAdapter(getContext(),reviews);
@@ -83,7 +85,10 @@ public class ReviewsFragment extends android.support.v4.app.Fragment {
                 dialog.show();
             }
         });
-        fetchReviews();
+        if(type.equals(Constants.MOVIETYPE))
+            fetchReviews();
+        else
+            fetchTVReviews();
         tv=new TextView(getContext());
         tv.setGravity(Gravity.CENTER_HORIZONTAL);
         tv.setPadding(5,5,5,5);
@@ -96,7 +101,10 @@ public class ReviewsFragment extends android.support.v4.app.Fragment {
             public void onClick(View v) {
 
                     currentPage += 1;
-                    fetchReviews();
+                    if(type.equals(Constants.MOVIETYPE))
+                        fetchReviews();
+                    else
+                        fetchTVReviews();
 
             }
         });
@@ -150,6 +158,71 @@ public class ReviewsFragment extends android.support.v4.app.Fragment {
                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                        params.setMargins(350,400,0,0);
                        tv.setLayoutParams(params);
+
+                        frameLayout.addView(tv);
+
+
+                    }
+                    else {
+                        Toast.makeText(getContext(), "No more reviews", Toast.LENGTH_SHORT).show();
+                        tv.setVisibility(View.GONE);
+                    }
+                }
+
+            }
+            @Override
+            public void onFailure(Call<FetchedReview> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+    public void fetchTVReviews(){
+        if(currentPage==1) {
+            progressBar.setVisibility(View.VISIBLE);
+            reviewsView.setVisibility(View.GONE);
+        }
+
+        Call<FetchedReview> call = ApiClient.getMoviesService().getTVReviews(movieId,Constants.apiKey,currentPage);
+        call.enqueue(new Callback<FetchedReview>() {
+            @Override
+            public void onResponse(Call<FetchedReview> call, Response<FetchedReview> response) {
+                FetchedReview fetchedReview = response.body();
+                List<Review> r= fetchedReview.getReviews(); //get the arraylist of movies
+
+                if(!r.isEmpty()) {
+                    for (int i = 0; i < r.size(); i++) {
+                        reviews.add(r.get(i));
+
+                    }
+                    adapter.notifyDataSetChanged();
+                    if(currentPage==1) {
+                        progressBar.setVisibility(View.GONE);
+                        reviewsView.setVisibility(View.VISIBLE);
+                    }
+
+                }
+                else{
+                    if(currentPage==1){
+
+                        progressBar.setVisibility(View.GONE);
+                        reviewsView.setVisibility(View.GONE);
+                        tv.setVisibility(View.GONE);
+
+                        LottieAnimationView animationView=new LottieAnimationView(getContext());
+                        animationView.setAnimation(R.raw.empty_list);
+                        frameLayout.addView(animationView);
+                        animationView.playAnimation();
+
+                        TextView tv= new TextView(getContext());
+                        tv.setText("No Reviews");
+                        tv.setTextColor(getResources().getColor(R.color.white));
+                        tv.setTextSize(25);
+                        // tv.setGravity(Gravity.CENTER_HORIZONTAL);
+                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        params.setMargins(350,400,0,0);
+                        tv.setLayoutParams(params);
 
                         frameLayout.addView(tv);
 

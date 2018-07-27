@@ -5,14 +5,18 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.squareup.picasso.Picasso;
 import com.thekhaeng.recyclerviewmargin.LayoutMarginDecoration;
 
@@ -26,7 +30,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CastDetail extends Activity {
+public class CastDetail extends AppCompatActivity {
 
     Intent intent;
     android.support.v7.widget.Toolbar toolbar;
@@ -41,6 +45,8 @@ public class CastDetail extends Activity {
     ArrayList<MovieCast> movies;
     ArrayList<TVCast> tvShows;
     TVCastOfPersonAdapter adapter2;
+    CardView cardView;
+    FrameLayout frameLayout;
 
 
     @Override
@@ -49,8 +55,8 @@ public class CastDetail extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cast_detail);
         toolbar=findViewById(R.id.person_details_toolbar);
-       // setSupportActionBar(toolbar2);
-       // getSupportActionBar().setDisplayShowTitleEnabled(false);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                                                  @Override
@@ -83,6 +89,8 @@ public class CastDetail extends Activity {
         birthPlaceHeader=findViewById(R.id.birthplaceHeader);
         tvCastHeader=findViewById(R.id.tvCastHeader);
         movieCastHeader=findViewById(R.id.movieCastHeader);
+        cardView=findViewById(R.id.cast_image_card_view);
+        frameLayout=findViewById(R.id.cast_frame_layout);
 
         adapter=new MovieCastOfPersonAdapter(this,movies);
         adapter2=new TVCastOfPersonAdapter(this,tvShows);
@@ -103,6 +111,14 @@ public class CastDetail extends Activity {
     }
 
     public void fetchPersonDetails(){
+
+        final LottieAnimationView animationView=new LottieAnimationView(this);
+        animationView.setAnimation(R.raw.loading_animation);
+        animationView.playAnimation();
+        animationView.setVisibility(View.VISIBLE);
+        frameLayout.addView(animationView);
+
+
 
         Call<Person> call = ApiClient.getMoviesService().getPersonDetails(castId,Constants.apiKey);
         call.enqueue(new Callback<Person>() {
@@ -126,6 +142,7 @@ public class CastDetail extends Activity {
                         }
                     }
                 });
+                animationView.setVisibility(View.GONE);
                 if(person.getName()!=null){
                     nameView.setText(person.getName());
                 }
@@ -133,6 +150,7 @@ public class CastDetail extends Activity {
                     nameView.setText("");
                 }
                 if(person.getPlaceOfBirth()!=null) {
+                    birthPlaceHeader.setVisibility(View.VISIBLE);
                     placeView.setText(person.getPlaceOfBirth());
                 }
                 else {
@@ -144,6 +162,7 @@ public class CastDetail extends Activity {
                     SimpleDateFormat f2 = new SimpleDateFormat("yyyy");
                     try {
                         Date date = f1.parse(person.getBirthday());
+                        ageHeader.setVisibility(View.VISIBLE);
                         ageView.setText((Calendar.getInstance().get(Calendar.YEAR) - Integer.parseInt(f2.format(date))) + "");
                     } catch (ParseException e) {
                         e.printStackTrace();
@@ -165,6 +184,12 @@ public class CastDetail extends Activity {
                         }
                     });
                 }
+                else{
+                    header.setVisibility(View.GONE);
+                    bioView.setText("");
+                }
+                cardView.setVisibility(View.VISIBLE);
+                imageView.setVisibility(View.VISIBLE);
                 Picasso.get().load(Constants.imageURL2+person.getProfilePath()).into(imageView);
 
             }
@@ -196,6 +221,7 @@ public class CastDetail extends Activity {
                 }
                 if(!movies.isEmpty()) {
                     adapter.notifyDataSetChanged();
+                    movieCastHeader.setVisibility(View.VISIBLE);
                     movieCastRecyclerView.setVisibility(View.VISIBLE);
                 }
                 else{
@@ -227,6 +253,7 @@ public class CastDetail extends Activity {
                 }
                 if(!tvShows.isEmpty()) {
                     adapter2.notifyDataSetChanged();
+                    tvCastHeader.setVisibility(View.VISIBLE);
                     tvCastRecyclerView.setVisibility(View.VISIBLE);
                 }
                 else{

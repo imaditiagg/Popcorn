@@ -59,6 +59,7 @@ public class MovieAdapter2 extends RecyclerView.Adapter<MovieViewHolder2> {
             public void onClick(View v) {
                 Intent intent = new Intent(context, MovieDetail.class);
                 intent.putExtra(Constants.ID, movie.id);
+                intent.putExtra(Constants.TYPE,Constants.MOVIETYPE);
                 context.startActivity(intent);
             }
         });

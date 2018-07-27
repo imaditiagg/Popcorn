@@ -27,6 +27,7 @@ public class CastFragment extends android.support.v4.app.Fragment {
     ArrayList<Cast> casts;
     CastAdapter adapter;
     GridLayoutManager manager;
+    String type;
     public CastFragment() {
         // Required empty public constructor
     }
@@ -38,6 +39,8 @@ public class CastFragment extends android.support.v4.app.Fragment {
         // Inflate the layout for this fragment
         Bundle bundle=getArguments();
         id= bundle.getInt(Constants.ID);
+        type=bundle.getString(Constants.TYPE);
+
         view= inflater.inflate(R.layout.fragment_cast, container, false);
         progressBar=view.findViewById(R.id.castProgressBar);
         recyclerView=view.findViewById(R.id.castView);
@@ -48,7 +51,10 @@ public class CastFragment extends android.support.v4.app.Fragment {
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
 
-        fetchCast();
+        if(type.equals(Constants.MOVIETYPE))
+            fetchCast();
+        else if(type.equals(Constants.TVTYPE))
+            fetchTVCast();
 
 
         return view;
@@ -64,7 +70,7 @@ public class CastFragment extends android.support.v4.app.Fragment {
             @Override
             public void onResponse(Call<FetchedCast> call, Response<FetchedCast> response) {
                 FetchedCast fetchedCast = response.body();
-                List<Cast> cast = fetchedCast.getCast(); //get the arraylist of movies
+                List<Cast> cast = fetchedCast.getCast(); //get the arraylist of cast
 
 
                 for(int i = 0;i<cast.size();i++){
@@ -82,5 +88,38 @@ public class CastFragment extends android.support.v4.app.Fragment {
         });
 
     }
+
+    public void fetchTVCast(){
+        progressBar.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.GONE);
+
+        Call<FetchedCast> call = ApiClient.getMoviesService().getTVCast(id,Constants.apiKey);
+        call.enqueue(new Callback<FetchedCast>() {
+            @Override
+            public void onResponse(Call<FetchedCast> call, Response<FetchedCast> response) {
+                FetchedCast fetchedCast = response.body();
+                List<Cast> cast = fetchedCast.getCast(); //get the arraylist of cast
+
+
+                for(int i = 0;i<cast.size();i++){
+                    casts.add(cast.get(i));
+                }
+
+                adapter.notifyDataSetChanged();
+                progressBar.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
+            }
+            @Override
+            public void onFailure(Call<FetchedCast> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+
+
+
+
 
 }

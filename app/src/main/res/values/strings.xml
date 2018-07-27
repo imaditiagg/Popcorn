@@ -11,11 +11,15 @@
     <string name="movies">Movies</string>
     <string name="tvShows">TV Shows</string>
     <string name="fav">Favorites</string>
+    <string name="popular">Popular People</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="queryhint">Search Movies, TV Shows, People</string>
     <string name="title_activity_search">SearchActivity</string>
     <string name="title_activity_tvshow_detail">TVShowDetail</string>
+
+    <string name="trailers">Trailers</string>
+    <string name="videos">Videos</string>
 
 </resources>

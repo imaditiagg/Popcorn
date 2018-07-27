@@ -7,7 +7,9 @@
 
         <item android:id="@+id/moviesItem" android:title="@string/movies"/>
         <item android:id="@+id/tvShowsItem" android:title="@string/tvShows"/>
+        <item android:id="@+id/popularPeopleItem" android:title="@string/popular"/>
         <item android:id="@+id/favItem" android:title="@string/fav"/>
+
     </group>
 
 </menu>

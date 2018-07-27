@@ -54,6 +54,7 @@ public class TVShowsAdapter2 extends RecyclerView.Adapter<TVShowsViewHolder2 >{
             public void onClick(View v) {
                 Intent intent = new Intent(context, TVShowDetail.class);
                 intent.putExtra(Constants.ID, show.id);
+                intent.putExtra(Constants.TYPE,Constants.TVTYPE);
                 context.startActivity(intent);
             }
         });

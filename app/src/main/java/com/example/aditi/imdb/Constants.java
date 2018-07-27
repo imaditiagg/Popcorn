@@ -17,4 +17,9 @@ public class Constants {
     public static final String YOUTUBE_THUMBNAIL_BASE_URL = "http://img.youtube.com/vi/";
     public static final String YOUTUBE_THUMBNAIL_IMAGE_QUALITY = "/hqdefault.jpg";
     public static final String QUERY="query";
+    public static final String TYPE="type";
+    public static final String MOVIETYPE="movie";
+    public static final String TVTYPE="tvshow";
+    public static final String POPULARTYPE="popular people";
+
 }

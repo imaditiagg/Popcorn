@@ -81,6 +81,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
                 public void onClick(View v) {
                     Intent intent= new Intent(context,MovieDetail.class);
                     intent.putExtra(Constants.ID,result.getId());
+                    intent.putExtra(Constants.TYPE,Constants.MOVIETYPE);
                     context.startActivity(intent);
 
                 }
@@ -121,6 +122,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
                 public void onClick(View v) {
                     Intent intent= new Intent(context,TVShowDetail.class);
                     intent.putExtra(Constants.ID,result.getId());
+                    intent.putExtra(Constants.TYPE,Constants.TVTYPE);
                     context.startActivity(intent);
 
                 }

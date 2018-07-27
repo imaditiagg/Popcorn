@@ -88,8 +88,9 @@ public class ViewAll extends AppCompatActivity {
 
     public void fetchMovies(){
         isLoading=true;
+        progressBar.setVisibility(View.VISIBLE);
         if(currentPage==1) {
-            progressBar.setVisibility(View.VISIBLE);
+
             recyclerView.setVisibility(View.GONE);
         }
 
@@ -107,10 +108,12 @@ public class ViewAll extends AppCompatActivity {
 
                 }
 
+                progressBar.setVisibility(View.GONE);
                 adapter.notifyDataSetChanged();
                 isLoading=false;
+
                 if(currentPage==1) {
-                    progressBar.setVisibility(View.GONE);
+
                     recyclerView.setVisibility(View.VISIBLE);
                 }
             }

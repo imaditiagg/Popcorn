@@ -40,6 +40,20 @@ public interface MovieService {
     @GET("tv/{path}")
     Call<FetchedTVshows> getShows(@Path("path") String path,@Query("api_key") String api_key,@Query(("page")) int page);
 
+    @GET("tv/{id}")
+    Call<TV> getTVShowDetails(@Path("id") int  id, @Query("api_key") String api_key);
 
+    @GET("tv/{id}/reviews")
+    Call<FetchedReview> getTVReviews(@Path("id") int id, @Query("api_key") String api_key,@Query("page") int page);
+
+
+    @GET("tv/{id}/credits")
+    Call<FetchedCast> getTVCast(@Path("id") int id,@Query("api_key") String api_key);
+
+    @GET("tv/{id}/similar")
+    Call<FetchedTVshows> getSimilarShows(@Path("id") int id,@Query("api_key") String api_key,@Query(("page")) int page);
+
+    @GET("person/popular")
+    Call<FetchedPopularPeople> getPopularCast(@Query("api_key") String api_key,@Query(("page")) int page);
 
 }

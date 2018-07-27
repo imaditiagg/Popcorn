@@ -78,4 +78,11 @@ public class FavTvShowsFragment extends android.support.v4.app.Fragment {
         return view;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        adapter.notifyDataSetChanged();
+
+    }
+
 }

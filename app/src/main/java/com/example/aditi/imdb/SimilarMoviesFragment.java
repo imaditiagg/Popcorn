@@ -21,14 +21,17 @@ import retrofit2.Response;
 public class SimilarMoviesFragment extends android.support.v4.app.Fragment {
 
     ArrayList<Movie> similarMovies;
+    ArrayList<TV> shows;
     ProgressBar progressBar;
     RecyclerView recyclerView;
     MovieAdapter2 adapter;
+    TVShowsAdapter2 tvShowsAdapter;
     boolean isLoading=false;
     int currentItems,totalItems,scrolledItems;
     GridLayoutManager manager;
     int totalPages,currentPage=1;
     int movieId;
+    String type;
 
 
     public SimilarMoviesFragment() {
@@ -43,13 +46,22 @@ public class SimilarMoviesFragment extends android.support.v4.app.Fragment {
         View view=inflater.inflate(R.layout.fragment_similar_movies, container, false);
         Bundle bundle= getArguments();
         movieId= bundle.getInt(Constants.ID);
+        type=bundle.getString(Constants.TYPE);
         similarMovies=new ArrayList<>();
+        shows=new ArrayList<>();
         progressBar=view.findViewById(R.id.progressBarForSimilarMovies);
         recyclerView=view.findViewById(R.id.similarMoviesView);
         adapter=new MovieAdapter2(getContext(),similarMovies);
-        recyclerView.setAdapter(adapter);
+        tvShowsAdapter=new TVShowsAdapter2(getContext(),shows);
+        if(type.equals(Constants.MOVIETYPE))
+            recyclerView.setAdapter(adapter);
+        else
+            recyclerView.setAdapter(tvShowsAdapter);
+
         manager = new GridLayoutManager(getContext(),3,GridLayoutManager.VERTICAL,false);
         recyclerView.setLayoutManager(manager);
+
+
         //fetch similar movies
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -68,14 +80,19 @@ public class SimilarMoviesFragment extends android.support.v4.app.Fragment {
                 scrolledItems=manager.findFirstVisibleItemPosition();
                 if(!isLoading && currentItems+scrolledItems==totalItems && currentPage<totalPages){
                     currentPage+=1;
-                    fetchSimilarMovies();
+                    if(type.equals(Constants.MOVIETYPE))
+                        fetchSimilarMovies();
+                    else
+                        fetchSimilarShows();
                 }
             }
         });
 
 
 
-        fetchSimilarMovies();
+        if(type.equals(Constants.MOVIETYPE))
+            fetchSimilarMovies();
+        else fetchSimilarShows();
         return view;
     }
 
@@ -109,6 +126,41 @@ public class SimilarMoviesFragment extends android.support.v4.app.Fragment {
             }
             @Override
             public void onFailure(Call<FetchedMovie> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+    public void fetchSimilarShows(){
+        isLoading=true;
+        if(currentPage==1) {
+            progressBar.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+        }
+
+        Call<FetchedTVshows> call = ApiClient.getMoviesService().getSimilarShows(movieId,Constants.apiKey,currentPage);
+        call.enqueue(new Callback<FetchedTVshows>() {
+            @Override
+            public void onResponse(Call<FetchedTVshows> call, Response<FetchedTVshows> response) {
+                FetchedTVshows fetchedShow = response.body();
+                ArrayList<TV> tv = fetchedShow.results; //get the arraylist of movies
+                totalPages=fetchedShow.total_pages;
+                for(int i = 0;i<tv.size();i++){
+
+                    shows.add(tv.get(i));
+
+                }
+
+                adapter.notifyDataSetChanged();
+                isLoading=false;
+                if(currentPage==1) {
+                    progressBar.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
+                }
+            }
+            @Override
+            public void onFailure(Call<FetchedTVshows> call, Throwable t) {
 
             }
         });

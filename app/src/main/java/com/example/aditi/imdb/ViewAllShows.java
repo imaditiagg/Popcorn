@@ -88,8 +88,9 @@ public class ViewAllShows extends AppCompatActivity {
 
     public void fetchShows(){
         isLoading=true;
+        progressBar.setVisibility(View.VISIBLE);
         if(currentPage==1) {
-            progressBar.setVisibility(View.VISIBLE);
+
             recyclerView.setVisibility(View.GONE);
         }
 
@@ -106,11 +107,11 @@ public class ViewAllShows extends AppCompatActivity {
                     shows.add(show.get(i));
 
                 }
-
+                progressBar.setVisibility(View.GONE);
                 adapter.notifyDataSetChanged();
                 isLoading=false;
                 if(currentPage==1) {
-                    progressBar.setVisibility(View.GONE);
+
                     recyclerView.setVisibility(View.VISIBLE);
                 }
             }
