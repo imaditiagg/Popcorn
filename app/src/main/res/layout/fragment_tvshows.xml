@@ -22,28 +22,34 @@
             android:layout_width="match_parent"
             android:orientation="vertical"
             android:layout_height="match_parent">
-            <LinearLayout
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingBottom="8dp"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingTop="8dp">
                 <TextView
+                    android:typeface="serif"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="22dp"
                     android:textStyle="bold"
                     android:textColor="@color/white"
-                    android:layout_marginLeft="5dp"
+                    android:layout_gravity="left"
                     android:layout_marginTop="20dp"
                     android:text="Airing Today"/>
                 <TextView
                     android:id="@+id/fragment_tvshows_viewNowShowing"
+                    android:typeface="serif"
                     android:text="View All"
                     android:textSize="15dp"
                     android:layout_marginTop="22dp"
                     android:textColor="@color/yellow"
-                    android:layout_marginLeft="175dp"
+                    android:layout_gravity="bottom|right"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
-            </LinearLayout>
+            </FrameLayout>
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/fragment_tvshows_nowShowingView"
                 android:layout_marginTop="10dp"
@@ -52,28 +58,34 @@
 
             </android.support.v7.widget.RecyclerView>
 
-            <LinearLayout
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingBottom="8dp"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingTop="8dp">
                 <TextView
+                    android:typeface="serif"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="22dp"
                     android:textStyle="bold"
                     android:textColor="@color/white"
-                    android:layout_marginLeft="5dp"
+                    android:layout_gravity="left"
                     android:layout_marginTop="30dp"
                     android:text="Popular"/>
                 <TextView
                     android:id="@+id/fragment_tvshows_viewPopular"
+                    android:typeface="serif"
                     android:text="View All"
                     android:textSize="15dp"
                     android:layout_marginTop="32dp"
                     android:textColor="@color/yellow"
-                    android:layout_marginLeft="222dp"
+                    android:layout_gravity="bottom|right"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
-            </LinearLayout>
+            </FrameLayout>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/fragment_tvshows_popularView"
@@ -85,28 +97,34 @@
 
 
 
-            <LinearLayout
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingBottom="8dp"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingTop="8dp">
                 <TextView
+                    android:typeface="serif"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="22dp"
                     android:textColor="@color/white"
-                    android:layout_marginLeft="5dp"
+                    android:layout_gravity="left"
                     android:layout_marginTop="30dp"
                     android:textStyle="bold"
                     android:text="On The Air"/>
                 <TextView
                     android:id="@+id/fragment_tvshows_viewOnTheAir"
+                    android:typeface="serif"
                     android:text="View All"
                     android:textSize="15dp"
                     android:layout_marginTop="32dp"
                     android:textColor="@color/yellow"
-                    android:layout_marginLeft="195dp"
+                    android:layout_gravity="bottom|right"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
-            </LinearLayout>
+            </FrameLayout>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/fragment_tvshows_onTheAirView"
@@ -115,28 +133,35 @@
                 android:layout_height="wrap_content">
 
             </android.support.v7.widget.RecyclerView>
-            <LinearLayout
+            <FrameLayout
+
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingBottom="8dp"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingTop="8dp">
                 <TextView
+                    android:typeface="serif"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="22dp"
                     android:textColor="@color/white"
-                    android:layout_marginLeft="5dp"
+                    android:layout_gravity="left"
                     android:layout_marginTop="30dp"
                     android:textStyle="bold"
                     android:text="Top Rated"/>
                 <TextView
                     android:id="@+id/fragment_tvshows_viewTopRated"
+                    android:typeface="serif"
                     android:text="View All"
                     android:textSize="15dp"
                     android:layout_marginTop="32dp"
                     android:textColor="@color/yellow"
-                    android:layout_marginLeft="200dp"
+                    android:layout_gravity="bottom|right"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
-            </LinearLayout>
+            </FrameLayout>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/fragment_tvshows_topRatedView"

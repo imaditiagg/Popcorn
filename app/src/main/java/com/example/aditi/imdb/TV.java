@@ -27,6 +27,9 @@ public class TV {
     @Ignore
     List<Genres> genres;
 
+    @Ignore
+    List<Integer>  episode_run_time;
+
     TV(int id,String name,String poster_path){
         this.id=id;
         this.name=name;

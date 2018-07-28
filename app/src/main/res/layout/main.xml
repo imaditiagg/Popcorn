@@ -20,6 +20,7 @@
         android:fitsSystemWindows="true"
         android:background="@color/grey"
         app:itemTextColor="@color/white"
+        app:itemIconTint="#e6e6e6"
         app:headerLayout="@layout/nav_view_header"
         app:menu="@menu/nav_drawer_menu"/>
 

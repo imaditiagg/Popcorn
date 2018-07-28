@@ -3,13 +3,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
+    <group
+        android:id="@+id/group1"
+        android:checkableBehavior="single">
 
-        <item android:id="@+id/moviesItem" android:title="@string/movies"/>
-        <item android:id="@+id/tvShowsItem" android:title="@string/tvShows"/>
-        <item android:id="@+id/popularPeopleItem" android:title="@string/popular"/>
-        <item android:id="@+id/favItem" android:title="@string/fav"/>
+        <item android:id="@+id/moviesItem" android:title="@string/movies" android:icon="@drawable/movies_white" android:iconTint="#e6e6e6"/>
+        <item android:id="@+id/tvShowsItem" android:title="@string/tvShows" android:icon="@drawable/tv" android:iconTint="#e6e6e6"/>
+        <item android:id="@+id/popularPeopleItem" android:title="@string/popular" android:icon="@drawable/people" android:iconTint="#e6e6e6"/>
 
+
+    </group>
+    <group
+        android:id="@+id/group2"
+        android:checkableBehavior="single">
+        <item android:id="@+id/favItem" android:title="@string/fav"  android:icon="@drawable/fav" android:iconTint="#e6e6e6"/>
     </group>
 
 </menu>

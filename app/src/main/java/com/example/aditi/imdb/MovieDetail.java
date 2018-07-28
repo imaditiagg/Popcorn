@@ -66,6 +66,7 @@ public class MovieDetail extends AppCompatActivity {
 
 
 
+
         collapsingToolbarLayout = findViewById(R.id.collapsing);
         appBarLayout=findViewById(R.id.activity_movie_detail_app_bar_layout);
 
@@ -112,6 +113,7 @@ public class MovieDetail extends AppCompatActivity {
                         if (appBarLayout.getTotalScrollRange() + verticalOffset == 0) {
                             if (movie.getTitle() != null)
                                 collapsingToolbarLayout.setTitle(movie.getTitle());
+
                             else
                                 collapsingToolbarLayout.setTitle("");
                                 toolbar.setVisibility(View.VISIBLE);
@@ -135,10 +137,11 @@ public class MovieDetail extends AppCompatActivity {
                     }
                 }
                 genres.setText(genre);
-                animationView.setVisibility(View.GONE);
-               // frameLayout.removeView(animationView);
-                backdrop.setVisibility(View.VISIBLE);
+
+
                 Picasso.get().load(Constants.imageURL+movie.backdropPath).into(backdrop);
+                animationView.setVisibility(View.GONE);
+                backdrop.setVisibility(View.VISIBLE);
 
             }
             @Override

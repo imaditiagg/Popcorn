@@ -34,7 +34,7 @@
             android:orientation="vertical"
             android:layout_gravity="center"
             android:layout_marginLeft="20dp"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/tagline"
@@ -85,10 +85,10 @@
 
             <Button
                 android:id="@+id/favButton"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="130dp"
+                android:layout_gravity="bottom|right"
                 android:background="@drawable/ic_favorite_border_white_24dp" />
 
 

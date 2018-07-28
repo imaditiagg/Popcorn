@@ -49,6 +49,7 @@
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
                     android:textColor="@color/white"
                     android:textSize="27dp"
+                    android:typeface="serif"
                     android:textStyle="bold" />
 
                 <TextView
@@ -69,7 +70,7 @@
                 android:id="@+id/details_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?android:attr/actionBarSize"
-                app:layout_collapseMode="parallax"
+                app:layout_collapseMode="pin"
                 app:popupTheme="@style/AppTheme.PopupOverlay" >
 
             </android.support.v7.widget.Toolbar>

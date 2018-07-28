@@ -98,7 +98,6 @@ public class DetailsFragment extends android.support.v4.app.Fragment {
 
         descView.setText(description);
         ratingView.setText(String.valueOf(rating) +"/10" );
-
         Picasso.get().load(Constants.imageURL2+poster).into(posterView);
 
         fetchTrailer(id);
@@ -139,8 +138,12 @@ public class DetailsFragment extends android.support.v4.app.Fragment {
         }
         else if(type.equals(Constants.TVTYPE)){
 
-            releaseDateView.setText("First Air Date : "+ date);
-            runtimeView.setText("");
+            if(!date.equals(null))
+                releaseDateView.setText("First Air Date : "+ date);
+            else
+                releaseDateView.setText("");
+
+            runtimeView.setText(String.valueOf("Duration : " +String.valueOf(time)+" Minutes"));
             taglineView.setText("");
 
             if(Favorite.isShowFav(getContext(),id)){
@@ -175,7 +178,6 @@ public class DetailsFragment extends android.support.v4.app.Fragment {
     }
 
     public void fetchTrailer(int id){
-        Log.i("Fn","called");
 
         Call<FetchedVideo> call = ApiClient.getMoviesService().getVideos(id,Constants.apiKey);
         call.enqueue(new retrofit2.Callback<FetchedVideo>() {

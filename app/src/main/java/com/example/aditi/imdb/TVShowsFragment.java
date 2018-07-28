@@ -37,6 +37,16 @@ public class TVShowsFragment extends android.support.v4.app.Fragment implements 
         // Required empty public constructor
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        fetchShows("airing_today",airingTodayShows,adapter1);
+        fetchShows("on_the_air",onTheAirShows,adapter2);
+        fetchShows2("top_rated",topRatedShows,adapter4);
+        fetchShows2("popular",popularShows,adapter3);
+
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -94,11 +104,6 @@ public class TVShowsFragment extends android.support.v4.app.Fragment implements 
         topRatedView.addItemDecoration( new LayoutMarginDecoration(1,20));
         topRatedView.setAdapter(adapter4);
 
-
-        fetchShows("airing_today",airingTodayShows,adapter1);
-        fetchShows("on_the_air",onTheAirShows,adapter2);
-        fetchShows2("top_rated",topRatedShows,adapter4);
-        fetchShows2("popular",popularShows,adapter3);
 
 
 

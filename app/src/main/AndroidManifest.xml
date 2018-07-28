@@ -28,6 +28,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".CastDetail"
+
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".SearchActivity"

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +25,7 @@ public class FavTvShowsFragment extends android.support.v4.app.Fragment {
     TVShowsAdapter2 adapter;
     FrameLayout frameLayout;
     LottieAnimationView animationView;
-
+    TextView tv;
 
     public FavTvShowsFragment() {
         // Required empty public constructor
@@ -39,6 +40,7 @@ public class FavTvShowsFragment extends android.support.v4.app.Fragment {
 
         recyclerView=view.findViewById(R.id.fav_shows_recycler_view);
         frameLayout=view.findViewById(R.id.fragment_favShows_rootLayout);
+        tv=view.findViewById(R.id.no_fav_shows);
 
         shows=new ArrayList<>();
         adapter = new TVShowsAdapter2(getContext(), shows);
@@ -54,7 +56,9 @@ public class FavTvShowsFragment extends android.support.v4.app.Fragment {
                 frameLayout.removeView(animationView);
             }
             adapter.notifyDataSetChanged();
+            tv.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
+
 
         }
         else{
@@ -62,16 +66,7 @@ public class FavTvShowsFragment extends android.support.v4.app.Fragment {
             animationView.setAnimation(R.raw.empty_list);
             frameLayout.addView(animationView);
             animationView.playAnimation();
-
-            TextView tv= new TextView(getContext());
-            tv.setText("No Favorite Shows");
-            tv.setTextColor(getResources().getColor(R.color.white));
-            tv.setTextSize(25);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            params.setMargins(250,400,0,0);
-            tv.setLayoutParams(params);
-
-            frameLayout.addView(tv);
+            tv.setVisibility(View.VISIBLE);
         }
 
 

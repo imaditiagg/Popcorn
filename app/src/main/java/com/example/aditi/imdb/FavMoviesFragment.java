@@ -7,6 +7,7 @@ import android.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,8 @@ public class FavMoviesFragment extends android.support.v4.app.Fragment {
     MovieAdapter2 adapter;
     FrameLayout frameLayout;
     LottieAnimationView animationView;
+
+    TextView tv;
 
     public FavMoviesFragment() {
         // Required empty public constructor
@@ -51,6 +54,7 @@ public class FavMoviesFragment extends android.support.v4.app.Fragment {
         View view= inflater.inflate(R.layout.fragment_fav_movies, container, false);
         frameLayout=view.findViewById(R.id.fragment_favMovies_rootLayout);
         recyclerView=view.findViewById(R.id.fav_movies_recycler_view);
+        tv=view.findViewById(R.id.no_fav_movies);
 
         movies=new ArrayList<>();
         adapter = new MovieAdapter2(getContext(), movies);
@@ -70,6 +74,7 @@ public class FavMoviesFragment extends android.support.v4.app.Fragment {
             }
             adapter.notifyDataSetChanged();
             recyclerView.setVisibility(View.VISIBLE);
+            tv.setVisibility(View.GONE);
 
         }
         else{
@@ -77,16 +82,8 @@ public class FavMoviesFragment extends android.support.v4.app.Fragment {
             animationView.setAnimation(R.raw.empty_list);
             frameLayout.addView(animationView);
             animationView.playAnimation();
+            tv.setVisibility(View.VISIBLE);
 
-            TextView tv= new TextView(getContext());
-            tv.setText("No Favorite Movies");
-            tv.setTextColor(getResources().getColor(R.color.white));
-            tv.setTextSize(25);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            params.setMargins(250,400,0,0);
-            tv.setLayoutParams(params);
-
-            frameLayout.addView(tv);
         }
 
 

@@ -18,6 +18,9 @@ import android.support.v4.app.FragmentManager;
 import com.airbnb.lottie.LottieAnimationView;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,6 +40,7 @@ public class TVShowDetail extends AppCompatActivity {
     FrameLayout frameLayout;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +48,16 @@ public class TVShowDetail extends AppCompatActivity {
         toolbar=findViewById(R.id.activity_tvShow_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                                                 @Override
+                                                 public void onClick(View view) {
+                                                     finish();
+                                                 }
+                                             }
+
+        );
+        toolbar.setNavigationIcon(R.drawable.ic_chevron_left_white_24dp);
 
         intent =getIntent();
         showId=intent.getIntExtra(Constants.ID,0);
@@ -59,6 +73,8 @@ public class TVShowDetail extends AppCompatActivity {
 
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager));
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
+
 
         fetchDetails();
 

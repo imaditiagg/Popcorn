@@ -106,12 +106,6 @@ public class MoviesFragment extends android.support.v4.app.Fragment implements  
         upcomingView.setAdapter(adapter2);
 
 
-
-
-        fetchMovies("now_playing",nowShowingMovies,adapter1);
-        fetchMovies("upcoming",upcomingMovies,adapter2);
-        fetchMovies2("top_rated",topRatedMovies,adapter4);
-        fetchMovies2("popular",popularMovies,adapter3);
         return output;
     }
 
