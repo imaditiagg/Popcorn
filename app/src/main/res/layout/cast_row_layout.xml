@@ -12,6 +12,7 @@
         android:elevation="100dp"
         android:id="@+id/castCardView"
         app:cardCornerRadius="55dp"
+        android:background="@color/lightGrey"
         android:layout_gravity="center"
         >
 

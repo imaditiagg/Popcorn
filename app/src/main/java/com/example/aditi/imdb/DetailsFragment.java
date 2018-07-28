@@ -96,7 +96,14 @@ public class DetailsFragment extends android.support.v4.app.Fragment {
 
     public void setDetails(){
 
-        descView.setText(description);
+        if(!description.isEmpty()) {
+            descView.setText(description);
+            descView.setVisibility(View.VISIBLE);
+        }
+        else{
+            descView.setText("");
+            descView.setVisibility(View.GONE);
+        }
         ratingView.setText(String.valueOf(rating) +"/10" );
         Picasso.get().load(Constants.imageURL2+poster).into(posterView);
 
@@ -138,7 +145,7 @@ public class DetailsFragment extends android.support.v4.app.Fragment {
         }
         else if(type.equals(Constants.TVTYPE)){
 
-            if(!date.equals(null))
+            if(!date.isEmpty())
                 releaseDateView.setText("First Air Date : "+ date);
             else
                 releaseDateView.setText("");

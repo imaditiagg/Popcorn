@@ -21,5 +21,7 @@
 
     <string name="trailers">Trailers</string>
     <string name="videos">Videos</string>
+    <string name="noReviews">No Reviews</string>
+    <string name="noResult">No results found</string>
 
 </resources>

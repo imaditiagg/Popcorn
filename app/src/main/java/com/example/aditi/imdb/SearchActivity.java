@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -28,6 +29,7 @@ public class SearchActivity extends AppCompatActivity {
     ArrayList<SearchResult> results;
     String query;
     FrameLayout frameLayout;
+    LottieAnimationView progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,7 @@ public class SearchActivity extends AppCompatActivity {
         recyclerView=findViewById(R.id.search_item_recycler_view);
         textView=findViewById(R.id.search_item_not_found_view);
         frameLayout=findViewById(R.id.activity_search_framelayout);
+        progressBar=findViewById(R.id.activity_search_progress_bar);
 
         results=new ArrayList<>();
         searchAdapter =new SearchAdapter(this,results);
@@ -68,6 +71,9 @@ public class SearchActivity extends AppCompatActivity {
 
 
     public void search(){
+        progressBar.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.GONE);
+
         Call<SearchResponse> call=ApiClient.getMoviesService().search(Constants.apiKey,query);
         call.enqueue(new Callback<SearchResponse>() {
             @Override
@@ -79,13 +85,14 @@ public class SearchActivity extends AppCompatActivity {
                         results.add(result.get(i));
                     }
                     searchAdapter.notifyDataSetChanged();
+                    progressBar.setVisibility(View.GONE);
                     recyclerView.setVisibility(View.VISIBLE);
                     textView.setVisibility(View.GONE);
                 }
                 else {
                     //no result found
+                        progressBar.setVisibility(View.GONE);
                         recyclerView.setVisibility(View.GONE);
-
                         LottieAnimationView animationView=new LottieAnimationView(SearchActivity.this);
                         animationView.setAnimation(R.raw.empty_list);
                         frameLayout.addView(animationView);

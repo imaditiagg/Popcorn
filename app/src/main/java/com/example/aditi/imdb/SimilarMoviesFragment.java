@@ -29,7 +29,7 @@ public class SimilarMoviesFragment extends android.support.v4.app.Fragment {
     boolean isLoading=false;
     int currentItems,totalItems,scrolledItems;
     GridLayoutManager manager;
-    int totalPages,currentPage=1;
+    int totalPages,currentPage;
     int movieId;
     String type;
 
@@ -43,6 +43,7 @@ public class SimilarMoviesFragment extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        currentPage=1;
         View view=inflater.inflate(R.layout.fragment_similar_movies, container, false);
         Bundle bundle= getArguments();
         movieId= bundle.getInt(Constants.ID);
@@ -94,12 +95,15 @@ public class SimilarMoviesFragment extends android.support.v4.app.Fragment {
             fetchSimilarMovies();
         else fetchSimilarShows();
         return view;
+
     }
 
 
     public void fetchSimilarMovies(){
         isLoading=true;
+
         if(currentPage==1) {
+
             progressBar.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
         }
@@ -117,12 +121,16 @@ public class SimilarMoviesFragment extends android.support.v4.app.Fragment {
 
                 }
 
+
                 adapter.notifyDataSetChanged();
+
                 isLoading=false;
                 if(currentPage==1) {
+
                     progressBar.setVisibility(View.GONE);
                     recyclerView.setVisibility(View.VISIBLE);
                 }
+
             }
             @Override
             public void onFailure(Call<FetchedMovie> call, Throwable t) {
@@ -134,7 +142,9 @@ public class SimilarMoviesFragment extends android.support.v4.app.Fragment {
 
     public void fetchSimilarShows(){
         isLoading=true;
+
         if(currentPage==1) {
+
             progressBar.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
         }
@@ -153,10 +163,13 @@ public class SimilarMoviesFragment extends android.support.v4.app.Fragment {
                 }
 
                 adapter.notifyDataSetChanged();
+
+
                 isLoading=false;
                 if(currentPage==1) {
                     progressBar.setVisibility(View.GONE);
                     recyclerView.setVisibility(View.VISIBLE);
+
                 }
             }
             @Override

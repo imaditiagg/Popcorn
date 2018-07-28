@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.v4.view.ViewCompat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -60,6 +61,9 @@ public class ReviewsFragment extends android.support.v4.app.Fragment {
         progressBar=view.findViewById(R.id.reviewsProgressBar);
         reviewsView=view.findViewById(R.id.reviewsList);
         frameLayout=view.findViewById(R.id.reviews_root_layout);
+        ViewCompat.setNestedScrollingEnabled(reviewsView,true);
+
+
 
         Bundle bundle=getArguments();
         movieId= bundle.getInt(Constants.ID);
@@ -117,6 +121,7 @@ public class ReviewsFragment extends android.support.v4.app.Fragment {
         if(currentPage==1) {
             progressBar.setVisibility(View.VISIBLE);
             reviewsView.setVisibility(View.GONE);
+
         }
 
         Call<FetchedReview> call = ApiClient.getMoviesService().getReviews(movieId,Constants.apiKey,currentPage);
@@ -145,19 +150,19 @@ public class ReviewsFragment extends android.support.v4.app.Fragment {
                         reviewsView.setVisibility(View.GONE);
                         tv.setVisibility(View.GONE);
 
+
                         LottieAnimationView animationView=new LottieAnimationView(getContext());
                         animationView.setAnimation(R.raw.empty_list);
                         frameLayout.addView(animationView);
                         animationView.playAnimation();
 
                         TextView tv= new TextView(getContext());
-                        tv.setText("No Reviews");
+                        tv.setText(R.string.noReviews);
                         tv.setTextColor(getResources().getColor(R.color.white));
                         tv.setTextSize(25);
-                       // tv.setGravity(Gravity.CENTER_HORIZONTAL);
-                       LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                       params.setMargins(350,400,0,0);
-                       tv.setLayoutParams(params);
+                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        params.setMargins(350,400,0,0);
+                        tv.setLayoutParams(params);
 
                         frameLayout.addView(tv);
 
