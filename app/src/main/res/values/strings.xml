@@ -23,5 +23,7 @@
     <string name="videos">Videos</string>
     <string name="noReviews">No Reviews</string>
     <string name="noResult">No results found</string>
+    <string name="about">About</string>
+    <string name="title_activity_about">AboutActivity</string>
 
 </resources>

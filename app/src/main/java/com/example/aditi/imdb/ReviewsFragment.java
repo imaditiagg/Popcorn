@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v4.view.ViewCompat;
+import android.support.v4.widget.NestedScrollView;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -17,11 +18,13 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 
+import java.io.LineNumberReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,10 +43,10 @@ public class ReviewsFragment extends android.support.v4.app.Fragment {
     ProgressBar progressBar;
     private static final int PAGE_START = 1;
     private int currentPage;
-    TextView tv;
+    TextView tv,noReviewsView;
     FrameLayout frameLayout;
     String type;
-
+    LottieAnimationView lottieAnimationView;
 
     public ReviewsFragment() {
         // Required empty public constructor
@@ -62,6 +65,8 @@ public class ReviewsFragment extends android.support.v4.app.Fragment {
         reviewsView=view.findViewById(R.id.reviewsList);
         frameLayout=view.findViewById(R.id.reviews_root_layout);
         ViewCompat.setNestedScrollingEnabled(reviewsView,true);
+        noReviewsView=view.findViewById(R.id.no_reviews);
+        lottieAnimationView=view.findViewById(R.id.empty_animation);
 
 
 
@@ -80,6 +85,7 @@ public class ReviewsFragment extends android.support.v4.app.Fragment {
                 View v = inflater.inflate(R.layout.review_dialog_view,null,false);
                 AlertDialog.Builder builder=new AlertDialog.Builder(getContext());
                 builder.setView(v);
+                builder.setCancelable(true);
                 TextView name = v.findViewById(R.id.userName);
                 TextView content =v.findViewById(R.id.userReview);
                 name.setText(review.getAuthor());
@@ -87,6 +93,7 @@ public class ReviewsFragment extends android.support.v4.app.Fragment {
 
                 AlertDialog dialog = builder.create();
                 dialog.show();
+
             }
         });
         if(type.equals(Constants.MOVIETYPE))
@@ -121,6 +128,8 @@ public class ReviewsFragment extends android.support.v4.app.Fragment {
         if(currentPage==1) {
             progressBar.setVisibility(View.VISIBLE);
             reviewsView.setVisibility(View.GONE);
+            lottieAnimationView.setVisibility(View.GONE);
+            noReviewsView.setVisibility(View.GONE);
 
         }
 
@@ -138,8 +147,10 @@ public class ReviewsFragment extends android.support.v4.app.Fragment {
                     }
                     adapter.notifyDataSetChanged();
                     if(currentPage==1) {
+                        noReviewsView.setVisibility(View.GONE);
                         progressBar.setVisibility(View.GONE);
                         reviewsView.setVisibility(View.VISIBLE);
+                        lottieAnimationView.setVisibility(View.GONE);
                     }
 
                 }
@@ -149,23 +160,12 @@ public class ReviewsFragment extends android.support.v4.app.Fragment {
                         progressBar.setVisibility(View.GONE);
                         reviewsView.setVisibility(View.GONE);
                         tv.setVisibility(View.GONE);
-
-
-                        LottieAnimationView animationView=new LottieAnimationView(getContext());
+                        /*  LottieAnimationView animationView=new LottieAnimationView(getContext());
                         animationView.setAnimation(R.raw.empty_list);
                         frameLayout.addView(animationView);
-                        animationView.playAnimation();
-
-                        TextView tv= new TextView(getContext());
-                        tv.setText(R.string.noReviews);
-                        tv.setTextColor(getResources().getColor(R.color.white));
-                        tv.setTextSize(25);
-                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                        params.setMargins(350,400,0,0);
-                        tv.setLayoutParams(params);
-
-                        frameLayout.addView(tv);
-
+                        animationView.playAnimation();*/
+                        lottieAnimationView.setVisibility(View.VISIBLE);
+                        noReviewsView.setVisibility(View.VISIBLE);
 
                     }
                     else {
@@ -187,6 +187,8 @@ public class ReviewsFragment extends android.support.v4.app.Fragment {
         if(currentPage==1) {
             progressBar.setVisibility(View.VISIBLE);
             reviewsView.setVisibility(View.GONE);
+            lottieAnimationView.setVisibility(View.GONE);
+            noReviewsView.setVisibility(View.GONE);
         }
 
         Call<FetchedReview> call = ApiClient.getMoviesService().getTVReviews(movieId,Constants.apiKey,currentPage);
@@ -204,7 +206,9 @@ public class ReviewsFragment extends android.support.v4.app.Fragment {
                     adapter.notifyDataSetChanged();
                     if(currentPage==1) {
                         progressBar.setVisibility(View.GONE);
+                        noReviewsView.setVisibility(View.GONE);
                         reviewsView.setVisibility(View.VISIBLE);
+                        lottieAnimationView.setVisibility(View.GONE);
                     }
 
                 }
@@ -214,22 +218,12 @@ public class ReviewsFragment extends android.support.v4.app.Fragment {
                         progressBar.setVisibility(View.GONE);
                         reviewsView.setVisibility(View.GONE);
                         tv.setVisibility(View.GONE);
-
-                        LottieAnimationView animationView=new LottieAnimationView(getContext());
+                        /* LottieAnimationView animationView=new LottieAnimationView(getContext());
                         animationView.setAnimation(R.raw.empty_list);
                         frameLayout.addView(animationView);
-                        animationView.playAnimation();
-
-                        TextView tv= new TextView(getContext());
-                        tv.setText("No Reviews");
-                        tv.setTextColor(getResources().getColor(R.color.white));
-                        tv.setTextSize(25);
-                        // tv.setGravity(Gravity.CENTER_HORIZONTAL);
-                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                        params.setMargins(350,400,0,0);
-                        tv.setLayoutParams(params);
-
-                        frameLayout.addView(tv);
+                        animationView.playAnimation();*/
+                        noReviewsView.setVisibility(View.VISIBLE);
+                        lottieAnimationView.setVisibility(View.VISIBLE);
 
 
                     }

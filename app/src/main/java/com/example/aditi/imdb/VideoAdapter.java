@@ -16,34 +16,34 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHolder> {
-    private Context mContext;
-    private List<Video> mVideos;
+    private Context context;
+    private List<Video> videos;
 
     public VideoAdapter(Context mContext, List<Video> videos) {
-        this.mContext = mContext;
-        this.mVideos = videos;
+        this.context = mContext;
+        this.videos = videos;
     }
 
     @Override
     public VideoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new VideoViewHolder(LayoutInflater.from(mContext).inflate(R.layout.video_item, parent, false));
+        return new VideoViewHolder(LayoutInflater.from(context).inflate(R.layout.video_item, parent, false));
     }
 
     @Override
     public void onBindViewHolder(VideoViewHolder holder, int position) {
 
-        Picasso.get().load(Constants.YOUTUBE_THUMBNAIL_BASE_URL + mVideos.get(position).getKey() + Constants.YOUTUBE_THUMBNAIL_IMAGE_QUALITY)
+        Picasso.get().load(Constants.YOUTUBE_THUMBNAIL_BASE_URL + videos.get(position).getKey() + Constants.YOUTUBE_THUMBNAIL_IMAGE_QUALITY)
                 .into(holder.videoImageView);
 
-        if (mVideos.get(position).getName() != null)
-            holder.videoTextView.setText(mVideos.get(position).getName());
+        if (videos.get(position).getName() != null)
+            holder.videoTextView.setText(videos.get(position).getName());
         else
             holder.videoTextView.setText("");
     }
 
     @Override
     public int getItemCount() {
-        return mVideos.size();
+        return videos.size();
     }
 
     public class VideoViewHolder extends RecyclerView.ViewHolder {
@@ -61,8 +61,8 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHol
             videoCard.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent youtubeIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.YOUTUBE_WATCH_BASE_URL + mVideos.get(getAdapterPosition()).getKey()));
-                    mContext.startActivity(youtubeIntent);
+                    Intent youtubeIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.YOUTUBE_WATCH_BASE_URL + videos.get(getAdapterPosition()).getKey()));
+                    context.startActivity(youtubeIntent);
                 }
             });
         }

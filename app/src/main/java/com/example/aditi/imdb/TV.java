@@ -30,10 +30,21 @@ public class TV {
     @Ignore
     List<Integer>  episode_run_time;
 
+    @Ignore
+    String homepage;
+
     TV(int id,String name,String poster_path){
         this.id=id;
         this.name=name;
         this.poster_path=poster_path;
+    }
+
+    public String getHomepage() {
+        return homepage;
+    }
+
+    public void setHomepage(String homepage) {
+        this.homepage = homepage;
     }
 
     public void setUniqueId(int uniqueId) {

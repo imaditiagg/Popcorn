@@ -35,6 +35,26 @@ public class Movie {
     String tagline;
     @Ignore
     int runtime;
+    @Ignore
+    String homepage;
+    @Ignore
+    String imdb_id;
+
+    public String getImdb_id() {
+        return imdb_id;
+    }
+
+    public void setImdb_id(String imdb_id) {
+        this.imdb_id = imdb_id;
+    }
+
+    public void setHomepage(String homepage) {
+        this.homepage = homepage;
+    }
+
+    public String getHomepage() {
+        return homepage;
+    }
 
     @Ignore
     public ArrayList<Genres> genres =new ArrayList<>();

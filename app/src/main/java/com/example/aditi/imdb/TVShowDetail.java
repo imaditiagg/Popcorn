@@ -10,6 +10,8 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -81,6 +83,30 @@ public class TVShowDetail extends AppCompatActivity {
 
 
 
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.share,menu);
+        return true;
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId()==R.id.share){
+            if(tvShow!=null){
+                Intent tvShareIntent = new Intent(Intent.ACTION_SEND);
+                tvShareIntent.setType("text/plain");
+                String extraText = "";
+                if (tvShow.getName() != null) extraText += tvShow.getName() + "\n";
+                if (tvShow.getHomepage() != null) extraText += tvShow.getHomepage();
+                tvShareIntent.putExtra(Intent.EXTRA_TEXT, extraText);
+                startActivity(tvShareIntent);
+            }
+        }
+        return true;
     }
 
     public void fetchDetails(){

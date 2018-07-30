@@ -1,6 +1,10 @@
 package com.example.aditi.imdb;
 
 
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.provider.ContactsContract;
@@ -18,6 +22,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -25,6 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jp.wasabeef.blurry.Blurry;
+import jp.wasabeef.glide.transformations.BlurTransformation;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -34,7 +43,7 @@ public class DetailsFragment extends android.support.v4.app.Fragment {
     VideoAdapter videoAdapter;
     ArrayList<Video> videos;
     TextView trailerView;
-    String date,description,poster,tagline,title;
+    String date,description,poster,tagline,title,imdbID;
     int id,time;
     float rating;
     Button favButton;
@@ -42,6 +51,7 @@ public class DetailsFragment extends android.support.v4.app.Fragment {
     ImageView posterView;
     RecyclerView trailerRecyclerView;
     String type;
+    LinearLayout layout;
 
 
     public DetailsFragment() {
@@ -67,6 +77,9 @@ public class DetailsFragment extends android.support.v4.app.Fragment {
         descView=view.findViewById(R.id.overView);
         ratingView = view.findViewById(R.id.rating);
         favButton=view.findViewById(R.id.favButton);
+        layout=view.findViewById(R.id.bglayout);
+
+
 
         trailerRecyclerView=view.findViewById(R.id.recycler_view_trailers_movie_detail);
         trailerView = view.findViewById(R.id.text_view_trailer_movie_detail);
@@ -85,9 +98,11 @@ public class DetailsFragment extends android.support.v4.app.Fragment {
         id=bundle.getInt(Constants.ID);
         title=bundle.getString(Constants.TITLE);
         type=bundle.getString(Constants.TYPE);
+
         //set details
 
         setDetails();
+
 
 
 
@@ -106,6 +121,16 @@ public class DetailsFragment extends android.support.v4.app.Fragment {
         }
         ratingView.setText(String.valueOf(rating) +"/10" );
         Picasso.get().load(Constants.imageURL2+poster).into(posterView);
+        Glide.with(this).load(Constants.imageURL2+poster).apply(RequestOptions.bitmapTransform(new BlurTransformation(65)) ).into(new SimpleTarget<Drawable>() {
+            public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    layout.setBackground(resource);
+                }
+                else{
+                    layout.setBackgroundColor(getResources().getColor(R.color.darkGrey));
+                }
+            }
+        });
 
         fetchTrailer(id);
 
@@ -192,12 +217,12 @@ public class DetailsFragment extends android.support.v4.app.Fragment {
             public void onResponse(Call<FetchedVideo> call, Response<FetchedVideo> response) {
                 FetchedVideo fetchedVideo = response.body();
                 if(fetchedVideo!=null) {
-                    List<Video> video = fetchedVideo.getVideos(); //get the arraylist of movies
+                    List<Video> video = fetchedVideo.getVideos(); //get the arraylist of videos
 
 
                     for (int i = 0; i < video.size(); i++) {
                         Video v = video.get(i);
-                        if (v != null && v.getSite() != null && v.getSite().equals("YouTube") && v.getType() != null && v.getType().equals("Trailer"))
+                        if (v != null && v.getSite() != null && v.getSite().equals("YouTube") && v.getType() != null )
                             videos.add(v);
                     }
 

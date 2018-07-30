@@ -20,6 +20,7 @@ public class Constants {
     public static final String TYPE="type";
     public static final String MOVIETYPE="movie";
     public static final String TVTYPE="tvshow";
-    public static final String POPULARTYPE="popular people";
+    public static final String IMDB_BASE_URL = "http://www.imdb.com/title/";
+    public static final String IMDB_ID="imdbID";
 
 }

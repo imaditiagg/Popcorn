@@ -1,6 +1,7 @@
 package com.example.aditi.imdb;
 
 import android.content.Intent;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -177,6 +178,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             transaction.replace(R.id.main_container,fragment);
             transaction.commit();
             return true;
+        }
+        else if(id==R.id.about){
+            Intent intent=new Intent(this,AboutActivity.class);
+            startActivity(intent);
+
+
         }
 
 

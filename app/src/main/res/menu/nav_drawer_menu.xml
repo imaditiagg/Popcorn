@@ -17,6 +17,8 @@
         android:id="@+id/group2"
         android:checkableBehavior="single">
         <item android:id="@+id/favItem" android:title="@string/fav"  android:icon="@drawable/fav" android:iconTint="#e6e6e6"/>
+        <item android:id="@+id/about" android:title="About" android:icon="@drawable/about" android:iconTint="#e6e6e6"/>
+
     </group>
 
 </menu>
