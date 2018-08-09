@@ -2,9 +2,12 @@ package com.example.aditi.imdb;
 
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -60,7 +63,8 @@ public class MovieAdapter2 extends RecyclerView.Adapter<MovieViewHolder2> {
                 Intent intent = new Intent(context, MovieDetail.class);
                 intent.putExtra(Constants.ID, movie.id);
                 intent.putExtra(Constants.TYPE,Constants.MOVIETYPE);
-                context.startActivity(intent);
+                ActivityOptionsCompat options= ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context,holder.imageView, ViewCompat.getTransitionName(holder.imageView));
+                context.startActivity(intent,options.toBundle());
             }
         });
 

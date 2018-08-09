@@ -22,5 +22,6 @@ public class Constants {
     public static final String TVTYPE="tvshow";
     public static final String IMDB_BASE_URL = "http://www.imdb.com/title/";
     public static final String IMDB_ID="imdbID";
+    public static final String SEASONCOUNT="SeasonsCount";
 
 }

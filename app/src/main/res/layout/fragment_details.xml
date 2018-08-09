@@ -23,6 +23,7 @@
 
         <ImageView
             android:id="@+id/moviePoster"
+            android:transitionName="posterImageTransition"
             android:layout_width="170dp"
             android:layout_height="230dp"
             android:layout_marginBottom="20dp"
@@ -107,6 +108,29 @@
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/text_view_seasons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:text="Seasons"
+        android:visibility="gone" />
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_seasons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:visibility="gone"
+        android:nestedScrollingEnabled="false" />
+
     <TextView
         android:id="@+id/text_view_trailer_movie_detail"
         android:layout_width="match_parent"
@@ -115,7 +139,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         android:textColor="@color/white"
-        android:textSize="20sp"
+        android:textSize="22sp"
         android:textStyle="bold"
         android:visibility="gone" />
 
@@ -129,6 +153,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:nestedScrollingEnabled="false" />
+
+
 
 
 

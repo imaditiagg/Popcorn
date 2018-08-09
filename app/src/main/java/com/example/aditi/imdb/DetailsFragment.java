@@ -8,10 +8,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.provider.ContactsContract;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -28,8 +32,11 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+import com.thekhaeng.recyclerviewmargin.LayoutMarginDecoration;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import jp.wasabeef.blurry.Blurry;
@@ -41,15 +48,17 @@ import retrofit2.Response;
 public class DetailsFragment extends android.support.v4.app.Fragment {
 
     VideoAdapter videoAdapter;
+    SeasonsAdapter seasonsAdapter;
     ArrayList<Video> videos;
-    TextView trailerView;
+    ArrayList<Season> seasons;
+    TextView trailerView,seasonView;
     String date,description,poster,tagline,title,imdbID;
-    int id,time;
+    int id,time,seasonCount;
     float rating;
     Button favButton;
     TextView releaseDateView,runtimeView,taglineView,descView,ratingView;
     ImageView posterView;
-    RecyclerView trailerRecyclerView;
+    RecyclerView trailerRecyclerView,seasonsRecyclerView;
     String type;
     LinearLayout layout;
 
@@ -69,6 +78,9 @@ public class DetailsFragment extends android.support.v4.app.Fragment {
         videos=new ArrayList<>();
         videoAdapter =new VideoAdapter(getContext(),videos);
 
+        seasons=new ArrayList<>();
+        seasonsAdapter=new SeasonsAdapter(getContext(),seasons);
+
         releaseDateView = view.findViewById(R.id.releaseDate);
         runtimeView=view.findViewById(R.id.runtime);
         posterView= view.findViewById(R.id.moviePoster);
@@ -87,6 +99,14 @@ public class DetailsFragment extends android.support.v4.app.Fragment {
         LinearLayoutManager layoutManager= new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
         trailerRecyclerView.setLayoutManager(layoutManager);
 
+        seasonsRecyclerView=view.findViewById(R.id.recycler_view_seasons);
+        seasonView=view.findViewById(R.id.text_view_seasons);
+        seasonsRecyclerView.setAdapter(seasonsAdapter);
+        LinearLayoutManager layoutManager2= new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
+        seasonsRecyclerView.addItemDecoration( new LayoutMarginDecoration(1,20));
+        seasonsRecyclerView.setLayoutManager(layoutManager2);
+
+
         //obtain details
 
         date=bundle.getString(Constants.DATE);
@@ -98,16 +118,14 @@ public class DetailsFragment extends android.support.v4.app.Fragment {
         id=bundle.getInt(Constants.ID);
         title=bundle.getString(Constants.TITLE);
         type=bundle.getString(Constants.TYPE);
+        seasonCount=bundle.getInt(Constants.SEASONCOUNT);
 
         //set details
 
         setDetails();
-
-
-
-
         return view;
     }
+
 
     public void setDetails(){
 
@@ -244,11 +262,46 @@ public class DetailsFragment extends android.support.v4.app.Fragment {
 
             }
         });
-
-
+      if(type.equals(Constants.TVTYPE)) {
+          for(int i=1;i<seasonCount;i++) {
+              fetchSeasons(i);
+          }
+      }
 
 
     }
 
+    public void fetchSeasons(int seasonNo) {
 
+        Call<Season> call = ApiClient.getMoviesService().getSeasons(id, seasonNo, Constants.apiKey);
+        call.enqueue(new retrofit2.Callback<Season>() {
+
+            @Override
+            public void onResponse(Call<Season> call, Response<Season> response) {
+                Season season = response.body();
+                if (season != null) {
+                    seasonsRecyclerView.setVisibility(View.VISIBLE);
+                    seasonView.setVisibility(View.VISIBLE);
+                    seasons.add(season);
+                    Collections.sort(seasons, new Comparator<Season>() {
+
+                        public int compare(Season s1, Season s2) {
+                            return s1.getAir_date().compareTo(s2.getAir_date());
+                        }
+                    });
+
+                    seasonsAdapter.notifyDataSetChanged();
+                    }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<Season> call, Throwable t) {
+
+            }
+        });
+
+
+    }
 }

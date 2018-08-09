@@ -18,6 +18,7 @@
 
         <ImageView
             android:id="@+id/castImage"
+            android:transitionName="castImageTransition"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:scaleType="fitXY"/>

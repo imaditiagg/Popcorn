@@ -28,6 +28,10 @@ public class TV {
     List<Genres> genres;
 
     @Ignore
+    int number_of_seasons;
+
+
+    @Ignore
     List<Integer>  episode_run_time;
 
     @Ignore

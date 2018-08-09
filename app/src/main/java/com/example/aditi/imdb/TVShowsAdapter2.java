@@ -1,8 +1,11 @@
 package com.example.aditi.imdb;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,7 +58,8 @@ public class TVShowsAdapter2 extends RecyclerView.Adapter<TVShowsViewHolder2 >{
                 Intent intent = new Intent(context, TVShowDetail.class);
                 intent.putExtra(Constants.ID, show.id);
                 intent.putExtra(Constants.TYPE,Constants.TVTYPE);
-                context.startActivity(intent);
+                ActivityOptionsCompat options= ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context,holder.imageView, ViewCompat.getTransitionName(holder.imageView));
+                context.startActivity(intent,options.toBundle());
             }
         });
 

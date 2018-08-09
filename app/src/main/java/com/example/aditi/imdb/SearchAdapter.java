@@ -1,9 +1,12 @@
 package com.example.aditi.imdb;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -42,7 +45,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SearchViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final SearchViewHolder holder, int position) {
 
         //obtain and set Data
         final SearchResult result = results.get(position);
@@ -82,7 +85,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
                     Intent intent= new Intent(context,MovieDetail.class);
                     intent.putExtra(Constants.ID,result.getId());
                     intent.putExtra(Constants.TYPE,Constants.MOVIETYPE);
-                    context.startActivity(intent);
+                    ActivityOptionsCompat options= ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context,holder.imageView, "posterImageTransition");
+                    context.startActivity(intent,options.toBundle());
 
                 }
             });
@@ -123,7 +127,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
                     Intent intent= new Intent(context,TVShowDetail.class);
                     intent.putExtra(Constants.ID,result.getId());
                     intent.putExtra(Constants.TYPE,Constants.TVTYPE);
-                    context.startActivity(intent);
+                    ActivityOptionsCompat options= ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context,holder.imageView, "posterImageTransition");
+                    context.startActivity(intent,options.toBundle());
 
                 }
             });
@@ -148,7 +153,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
                 public void onClick(View v) {
                     Intent intent= new Intent(context,CastDetail.class);
                     intent.putExtra(Constants.CAST_ID,(long)result.getId());
-                    context.startActivity(intent);
+                    ActivityOptionsCompat options= ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context,holder.imageView, "castImageTransition");
+                    context.startActivity(intent,options.toBundle());
 
                 }
             });

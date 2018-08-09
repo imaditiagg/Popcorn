@@ -56,4 +56,6 @@ public interface MovieService {
     @GET("person/popular")
     Call<FetchedPopularPeople> getPopularCast(@Query("api_key") String api_key,@Query(("page")) int page);
 
+    @GET("tv/{id}/season/{sId}")
+    Call<Season> getSeasons(@Path("id") int id,@Path("sId") int sId,@Query("api_key") String api_key);
 }

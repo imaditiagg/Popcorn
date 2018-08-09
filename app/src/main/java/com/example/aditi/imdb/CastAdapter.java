@@ -1,8 +1,11 @@
 package com.example.aditi.imdb;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,7 +36,7 @@ public class CastAdapter extends RecyclerView.Adapter<CastViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CastViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final CastViewHolder holder, int position) {
 
         final Cast cast = casts.get(position);
         holder.name.setText(cast.getName());
@@ -45,7 +48,8 @@ public class CastAdapter extends RecyclerView.Adapter<CastViewHolder> {
             public void onClick(View v) {
                 Intent intent=new Intent(context,CastDetail.class);
                 intent.putExtra(Constants.CAST_ID,cast.getId());
-                context.startActivity(intent);
+                ActivityOptionsCompat options= ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context,holder.image, ViewCompat.getTransitionName(holder.image));
+                context.startActivity(intent,options.toBundle());
             }
         });
 

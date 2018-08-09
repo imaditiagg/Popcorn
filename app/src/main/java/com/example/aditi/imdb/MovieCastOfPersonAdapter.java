@@ -1,7 +1,10 @@
 package com.example.aditi.imdb;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -72,7 +75,8 @@ public class MovieCastOfPersonAdapter extends RecyclerView.Adapter<MovieCastOfPe
                 public void onClick(View view) {
                     Intent intent = new Intent(context, MovieDetail.class);
                     intent.putExtra(Constants.ID, movieCasts.get(getAdapterPosition()).id);
-                    context.startActivity(intent);
+                    ActivityOptionsCompat options= ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context,moviePosterImageView, ViewCompat.getTransitionName(moviePosterImageView));
+                    context.startActivity(intent,options.toBundle());
                 }
             });
         }
