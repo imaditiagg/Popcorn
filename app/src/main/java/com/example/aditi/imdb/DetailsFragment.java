@@ -150,9 +150,10 @@ public class DetailsFragment extends android.support.v4.app.Fragment {
             }
         });
 
-        fetchTrailer(id);
+
 
         if(type.equals(Constants.MOVIETYPE)) {
+            fetchMovieTrailer(id);
 
             taglineView.setText(tagline);
             releaseDateView.setText("Release Date : "+ date);
@@ -187,6 +188,7 @@ public class DetailsFragment extends android.support.v4.app.Fragment {
 
         }
         else if(type.equals(Constants.TVTYPE)){
+            fetchTVTrailer(id);
 
             if(!date.isEmpty())
                 releaseDateView.setText("First Air Date : "+ date);
@@ -227,7 +229,7 @@ public class DetailsFragment extends android.support.v4.app.Fragment {
 
     }
 
-    public void fetchTrailer(int id){
+    public void fetchMovieTrailer(int id){
 
         Call<FetchedVideo> call = ApiClient.getMoviesService().getVideos(id,Constants.apiKey);
         call.enqueue(new retrofit2.Callback<FetchedVideo>() {
@@ -262,11 +264,51 @@ public class DetailsFragment extends android.support.v4.app.Fragment {
 
             }
         });
-      if(type.equals(Constants.TVTYPE)) {
-          for(int i=1;i<seasonCount;i++) {
-              fetchSeasons(i);
-          }
-      }
+
+
+    }
+
+    public void fetchTVTrailer(int id){
+
+        Call<FetchedVideo> call = ApiClient.getMoviesService().getTVvideos(id,Constants.apiKey);
+        call.enqueue(new retrofit2.Callback<FetchedVideo>() {
+            @Override
+            public void onResponse(Call<FetchedVideo> call, Response<FetchedVideo> response) {
+                FetchedVideo fetchedVideo = response.body();
+                if(fetchedVideo!=null) {
+                    List<Video> video = fetchedVideo.getVideos(); //get the arraylist of videos
+
+
+                    for (int i = 0; i < video.size(); i++) {
+                        Video v = video.get(i);
+                        if (v != null && v.getSite() != null && v.getSite().equals("YouTube") && v.getType() != null )
+                            videos.add(v);
+                    }
+
+                    if (!videos.isEmpty()) {
+
+                        trailerView.setVisibility(View.VISIBLE);
+                        videoAdapter.notifyDataSetChanged();
+                        if (type.equals(Constants.MOVIETYPE)) {
+                            trailerView.setText(R.string.trailers);
+                        } else {
+                            trailerView.setText(R.string.videos);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FetchedVideo> call, Throwable t) {
+
+            }
+        });
+        //fetch season details
+        if(type.equals(Constants.TVTYPE)) {
+            for(int i=1;i<seasonCount;i++) {
+                fetchSeasons(i);
+            }
+        }
 
 
     }

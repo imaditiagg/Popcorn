@@ -1,10 +1,12 @@
 package com.example.aditi.imdb;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.app.Activity;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
@@ -40,6 +42,9 @@ public class TVShowDetail extends AppCompatActivity {
     ViewPager viewPager;
     TV tvShow;
     FrameLayout frameLayout;
+    Boolean isActivityLoaded=false,isBroadcastReceiverRegistered=false;
+    private Snackbar mConnectivitySnackbar;
+    private ConnectivityBroadcastReceiver mConnectivityBroadcastReceiver;
 
 
 
@@ -78,13 +83,55 @@ public class TVShowDetail extends AppCompatActivity {
 
 
 
-        fetchDetails();
+        if (NetworkConnection.isConnected(TVShowDetail.this)) {
+            isActivityLoaded = true;
+            fetchDetails();
+
+        }
 
 
 
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mConnectivitySnackbar= Snackbar.make(appBarLayout,R.string.no_connection, Snackbar.LENGTH_INDEFINITE);
+
+        if (!isActivityLoaded && !NetworkConnection.isConnected(TVShowDetail.this)) {
+            mConnectivitySnackbar.show();
+
+            mConnectivityBroadcastReceiver = new ConnectivityBroadcastReceiver(new ConnectivityBroadcastReceiver.ConnectivityReceiverListener() {
+                @Override
+                public void onNetworkConnectionConnected() {
+                    mConnectivitySnackbar.dismiss();
+                    isActivityLoaded = true;
+                    fetchDetails();
+                    isBroadcastReceiverRegistered = false;
+                    unregisterReceiver(mConnectivityBroadcastReceiver);
+                }
+            });
+
+            IntentFilter intentFilter = new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE");
+            isBroadcastReceiverRegistered = true;
+            registerReceiver(mConnectivityBroadcastReceiver, intentFilter);
+
+        } else if (!isActivityLoaded && NetworkConnection.isConnected(TVShowDetail.this)) {
+            isActivityLoaded = true;
+            fetchDetails();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        if (isBroadcastReceiverRegistered) {
+            isBroadcastReceiverRegistered = false;
+            unregisterReceiver(mConnectivityBroadcastReceiver);
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

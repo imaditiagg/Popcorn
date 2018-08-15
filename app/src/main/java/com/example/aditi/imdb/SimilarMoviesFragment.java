@@ -154,16 +154,17 @@ public class SimilarMoviesFragment extends android.support.v4.app.Fragment {
             @Override
             public void onResponse(Call<FetchedTVshows> call, Response<FetchedTVshows> response) {
                 FetchedTVshows fetchedShow = response.body();
-                ArrayList<TV> tv = fetchedShow.results; //get the arraylist of movies
-                totalPages=fetchedShow.total_pages;
-                for(int i = 0;i<tv.size();i++){
+                if(fetchedShow!=null) {
+                    ArrayList<TV> tv = fetchedShow.results; //get the arraylist of movies
+                    totalPages = fetchedShow.total_pages;
+                    for (int i = 0; i < tv.size(); i++) {
 
-                    shows.add(tv.get(i));
+                        shows.add(tv.get(i));
 
+                    }
+
+                    adapter.notifyDataSetChanged();
                 }
-
-                adapter.notifyDataSetChanged();
-
 
                 isLoading=false;
                 if(currentPage==1) {

@@ -48,8 +48,7 @@ public class CastAdapter extends RecyclerView.Adapter<CastViewHolder> {
             public void onClick(View v) {
                 Intent intent=new Intent(context,CastDetail.class);
                 intent.putExtra(Constants.CAST_ID,cast.getId());
-                ActivityOptionsCompat options= ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context,holder.image, ViewCompat.getTransitionName(holder.image));
-                context.startActivity(intent,options.toBundle());
+                context.startActivity(intent);
             }
         });
 

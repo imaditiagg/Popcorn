@@ -25,5 +25,7 @@
     <string name="noResult">No results found</string>
     <string name="about">About</string>
     <string name="title_activity_about">AboutActivity</string>
+    <string name="title_activity_video_play">VideoPlayActivity</string>
+    <string name="no_connection">No Internet Connection</string>
 
 </resources>

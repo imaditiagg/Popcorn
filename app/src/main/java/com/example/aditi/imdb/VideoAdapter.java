@@ -61,7 +61,13 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHol
             videoCard.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent youtubeIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.YOUTUBE_WATCH_BASE_URL + videos.get(getAdapterPosition()).getKey()));
+                    //implicit intent
+                    //Intent youtubeIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.YOUTUBE_WATCH_BASE_URL + videos.get(getAdapterPosition()).getKey()));
+                    //context.startActivity(youtubeIntent);
+
+                    //explicit intent
+                    Intent youtubeIntent=new Intent(context,VideoPlayActivity.class);
+                    youtubeIntent.putExtra(Constants.KEY,videos.get(getAdapterPosition()).getKey());
                     context.startActivity(youtubeIntent);
                 }
             });

@@ -1,8 +1,10 @@
 package com.example.aditi.imdb;
 
 
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -29,9 +31,65 @@ public class PopularPeopleFragment extends android.support.v4.app.Fragment {
     boolean isLoading=false;
     int currentItems,totalItems,scrolledItems;
     int totalPages,currentPage=1;
+    Boolean isActivityLoaded=false,isBroadcastReceiverRegistered=false;
+    private Snackbar mConnectivitySnackbar;
+    private ConnectivityBroadcastReceiver mConnectivityBroadcastReceiver;
 
     public PopularPeopleFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (NetworkConnection.isConnected(getContext())) {
+            isActivityLoaded = true;
+            fetchPeople();
+        }
+
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        if (isBroadcastReceiverRegistered) {
+            isBroadcastReceiverRegistered = false;
+            getContext().unregisterReceiver(mConnectivityBroadcastReceiver);
+        }
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mConnectivitySnackbar= Snackbar.make(recyclerView,R.string.no_connection, Snackbar.LENGTH_INDEFINITE);
+
+        if (!isActivityLoaded && !NetworkConnection.isConnected(getContext())) {
+            mConnectivitySnackbar.show();
+
+            mConnectivityBroadcastReceiver = new ConnectivityBroadcastReceiver(new ConnectivityBroadcastReceiver.ConnectivityReceiverListener() {
+                @Override
+                public void onNetworkConnectionConnected() {
+                    mConnectivitySnackbar.dismiss();
+                    isActivityLoaded = true;
+                    fetchPeople();
+                    isBroadcastReceiverRegistered = false;
+                    getContext().unregisterReceiver(mConnectivityBroadcastReceiver);
+                }
+            });
+
+            IntentFilter intentFilter = new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE");
+            isBroadcastReceiverRegistered = true;
+            getContext().registerReceiver(mConnectivityBroadcastReceiver, intentFilter);
+
+        } else if (!isActivityLoaded && NetworkConnection.isConnected(getContext())) {
+            isActivityLoaded = true;
+            fetchPeople();
+
+
+        }
     }
 
 
@@ -71,7 +129,7 @@ public class PopularPeopleFragment extends android.support.v4.app.Fragment {
             }
         });
 
-        fetchPeople();
+
         return view;
     }
 

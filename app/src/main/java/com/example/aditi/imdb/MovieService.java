@@ -58,4 +58,7 @@ public interface MovieService {
 
     @GET("tv/{id}/season/{sId}")
     Call<Season> getSeasons(@Path("id") int id,@Path("sId") int sId,@Query("api_key") String api_key);
+
+    @GET("tv/{id}/videos")
+    Call<FetchedVideo> getTVvideos(@Path("id") int id,@Query("api_key") String api_key);
 }

@@ -2,8 +2,10 @@ package com.example.aditi.imdb;
 
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,6 +33,9 @@ public class TVShowsFragment extends android.support.v4.app.Fragment implements 
     TVShowsAdapter2 adapter3,adapter4;
     TextView tv1,tv2,tv3,tv4;
     ArrayList<TV> airingTodayShows,popularShows,onTheAirShows,topRatedShows;
+    Boolean isActivityLoaded=false,isBroadcastReceiverRegistered=false;
+    private Snackbar mConnectivitySnackbar;
+    private ConnectivityBroadcastReceiver mConnectivityBroadcastReceiver;
 
 
     public TVShowsFragment() {
@@ -40,12 +45,62 @@ public class TVShowsFragment extends android.support.v4.app.Fragment implements 
     @Override
     public void onStart() {
         super.onStart();
-        fetchShows("airing_today",airingTodayShows,adapter1);
-        fetchShows("on_the_air",onTheAirShows,adapter2);
-        fetchShows2("top_rated",topRatedShows,adapter4);
-        fetchShows2("popular",popularShows,adapter3);
+        if (NetworkConnection.isConnected(getContext())) {
+            isActivityLoaded = true;
+            fetchShows("airing_today", airingTodayShows, adapter1);
+            fetchShows("on_the_air", onTheAirShows, adapter2);
+            fetchShows2("top_rated", topRatedShows, adapter4);
+            fetchShows2("popular", popularShows, adapter3);
+        }
 
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mConnectivitySnackbar= Snackbar.make(scrollView,R.string.no_connection, Snackbar.LENGTH_INDEFINITE);
+
+        if (!isActivityLoaded && !NetworkConnection.isConnected(getContext())) {
+            mConnectivitySnackbar.show();
+
+            mConnectivityBroadcastReceiver = new ConnectivityBroadcastReceiver(new ConnectivityBroadcastReceiver.ConnectivityReceiverListener() {
+                @Override
+                public void onNetworkConnectionConnected() {
+                    mConnectivitySnackbar.dismiss();
+                    isActivityLoaded = true;
+                    fetchShows("airing_today", airingTodayShows, adapter1);
+                    fetchShows("on_the_air", onTheAirShows, adapter2);
+                    fetchShows2("top_rated", topRatedShows, adapter4);
+                    fetchShows2("popular", popularShows, adapter3);
+                    isBroadcastReceiverRegistered = false;
+                    getContext().unregisterReceiver(mConnectivityBroadcastReceiver);
+                }
+            });
+
+            IntentFilter intentFilter = new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE");
+            isBroadcastReceiverRegistered = true;
+            getContext().registerReceiver(mConnectivityBroadcastReceiver, intentFilter);
+
+        } else if (!isActivityLoaded && NetworkConnection.isConnected(getContext())) {
+            isActivityLoaded = true;
+            fetchShows("airing_today", airingTodayShows, adapter1);
+            fetchShows("on_the_air", onTheAirShows, adapter2);
+            fetchShows2("top_rated", topRatedShows, adapter4);
+            fetchShows2("popular", popularShows, adapter3);
+
+
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        if (isBroadcastReceiverRegistered) {
+            isBroadcastReceiverRegistered = false;
+            getContext().unregisterReceiver(mConnectivityBroadcastReceiver);
+        }
     }
 
     @Override

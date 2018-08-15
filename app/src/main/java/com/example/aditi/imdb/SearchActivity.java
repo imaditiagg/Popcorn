@@ -1,8 +1,10 @@
 package com.example.aditi.imdb;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.app.Activity;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,6 +32,9 @@ public class SearchActivity extends AppCompatActivity {
     String query;
     FrameLayout frameLayout;
     LottieAnimationView progressBar;
+    Boolean isActivityLoaded=false,isBroadcastReceiverRegistered=false;
+    private Snackbar mConnectivitySnackbar;
+    private ConnectivityBroadcastReceiver mConnectivityBroadcastReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,12 +68,53 @@ public class SearchActivity extends AppCompatActivity {
 
         Intent intent=getIntent();
         query=intent.getStringExtra(Constants.QUERY);
-        search();
+        if (NetworkConnection.isConnected(SearchActivity.this)) {
+            isActivityLoaded = true;
+            search();
+
+        }
 
         toolbar.setTitle(query);//set query as title on toolbar
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mConnectivitySnackbar= Snackbar.make(recyclerView,R.string.no_connection, Snackbar.LENGTH_INDEFINITE);
+
+        if (!isActivityLoaded && !NetworkConnection.isConnected(SearchActivity.this)) {
+            mConnectivitySnackbar.show();
+
+            mConnectivityBroadcastReceiver = new ConnectivityBroadcastReceiver(new ConnectivityBroadcastReceiver.ConnectivityReceiverListener() {
+                @Override
+                public void onNetworkConnectionConnected() {
+                    mConnectivitySnackbar.dismiss();
+                    isActivityLoaded = true;
+                    search();
+                    isBroadcastReceiverRegistered = false;
+                    unregisterReceiver(mConnectivityBroadcastReceiver);
+                }
+            });
+
+            IntentFilter intentFilter = new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE");
+            isBroadcastReceiverRegistered = true;
+            registerReceiver(mConnectivityBroadcastReceiver, intentFilter);
+
+        } else if (!isActivityLoaded && NetworkConnection.isConnected(SearchActivity.this)) {
+            isActivityLoaded = true;
+            search();
+        }
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        if (isBroadcastReceiverRegistered) {
+            isBroadcastReceiverRegistered = false;
+            unregisterReceiver(mConnectivityBroadcastReceiver);
+        }
+    }
 
     public void search(){
         progressBar.setVisibility(View.VISIBLE);

@@ -1,10 +1,12 @@
 package com.example.aditi.imdb;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.app.Activity;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -47,6 +49,9 @@ public class CastDetail extends AppCompatActivity {
     TVCastOfPersonAdapter adapter2;
     CardView cardView;
     FrameLayout frameLayout;
+    Boolean isActivityLoaded=false,isBroadcastReceiverRegistered=false;
+    private Snackbar mConnectivitySnackbar;
+    private ConnectivityBroadcastReceiver mConnectivityBroadcastReceiver;
 
 
     @Override
@@ -103,11 +108,58 @@ public class CastDetail extends AppCompatActivity {
         tvCastRecyclerView.setLayoutManager(layoutManager2);
         tvCastRecyclerView.addItemDecoration( new LayoutMarginDecoration(1,20));
 
-        fetchPersonDetails();
-        fetchMovieCastOfPerson();
-        fetchTVCastOfPerson();
+        if (NetworkConnection.isConnected(CastDetail.this)) {
+            isActivityLoaded = true;
+
+            fetchPersonDetails();
+            fetchMovieCastOfPerson();
+            fetchTVCastOfPerson();
+        }
 
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mConnectivitySnackbar= Snackbar.make(appBarLayout,R.string.no_connection, Snackbar.LENGTH_INDEFINITE);
+
+        if (!isActivityLoaded && !NetworkConnection.isConnected(CastDetail.this)) {
+            mConnectivitySnackbar.show();
+
+            mConnectivityBroadcastReceiver = new ConnectivityBroadcastReceiver(new ConnectivityBroadcastReceiver.ConnectivityReceiverListener() {
+                @Override
+                public void onNetworkConnectionConnected() {
+                    mConnectivitySnackbar.dismiss();
+                    isActivityLoaded = true;
+                    fetchPersonDetails();
+                    fetchMovieCastOfPerson();
+                    fetchTVCastOfPerson();
+                    isBroadcastReceiverRegistered = false;
+                    unregisterReceiver(mConnectivityBroadcastReceiver);
+                }
+            });
+
+            IntentFilter intentFilter = new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE");
+            isBroadcastReceiverRegistered = true;
+            registerReceiver(mConnectivityBroadcastReceiver, intentFilter);
+
+        } else if (!isActivityLoaded && NetworkConnection.isConnected(CastDetail.this)) {
+            isActivityLoaded = true;
+            fetchPersonDetails();
+            fetchMovieCastOfPerson();
+            fetchTVCastOfPerson();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        if (isBroadcastReceiverRegistered) {
+            isBroadcastReceiverRegistered = false;
+            unregisterReceiver(mConnectivityBroadcastReceiver);
+        }
     }
 
     public void fetchPersonDetails(){
